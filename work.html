@@ -35,7 +35,7 @@
   document.title = `${p.name} · Thomas Arya`;
   const mail = `mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}`;
   const shots = p.imgs.length
-    ? `<div class="shots">${p.imgs.map((s, j) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></figure>`).join('')}</div>`
+    ? `<div class="shots${p.five ? ' five' : ''}">${p.imgs.map((s, j) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></figure>`).join('')}</div>`
     : `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
   document.getElementById('page').innerHTML = `
   <section class="phero">${FX}
@@ -63,12 +63,13 @@
     <div class="section-head" style="position:relative;z-index:1"><p class="kick">Impact</p><h2>What <em>changed.</em></h2></div>
     <div class="impact">${p.impacts.map((x) => `<article class="glass reveal"><b>${esc(x[0])}</b><p>${esc(x[1])}</p></article>`).join('')}</div>
   </section>
-  ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart)}</div></section>` : ''}
+  ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart, '', p.ytPoster)}</div></section>` : ''}
   ${p.vids ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="vids">${p.vids.map((v, j) => `<figure class="reveal${j === 0 ? ' big' : ''}"><video src="media/${v[0]}.mp4" poster="media/${v[0]}.jpg" ${j === 0 ? 'autoplay' : 'controls preload="none"'} muted loop playsinline></video><figcaption>${esc(v[1])}</figcaption></figure>`).join('')}</div></section>` : ''}
   <section class="section"${p.yt || p.vids ? ' style="padding-top:0"' : ''}>
     <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
     ${p.shotsNote ? `<p class="shots-note">${esc(p.shotsNote)}</p>` : ''}
     ${shots}
+    ${p.stills ? `<div class="shots two" style="margin-top:16px">${p.stills.map((s) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} video still" loading="lazy"></figure>`).join('')}</div><p class="shots-note" style="margin:14px 0 0">Stills from the video.</p>` : ''}
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px">
       ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}
       <a class="btn btn-ink" href="${mail}"><span>Ask for the full case study</span><i aria-hidden="true">→</i></a>

@@ -138,7 +138,8 @@ h2 em{font-weight:400;letter-spacing:-.02em;color:var(--blue)} .dark h2 em{color
 .c-abhitek .chip{left:5cqw;bottom:4.5cqw;background:#151203;color:#F6C61A}
 .c-muaraapp{--bg:radial-gradient(circle at 50% 55%,#6B3BFF,#1A0B4A 70%)}
 .c-muaraapp .ring{position:absolute;left:50%;top:55%;border:1px solid rgba(255,255,255,.22);border-radius:50%;transform:translate(-50%,-50%)}
-.c-muaraapp img{width:66cqw;aspect-ratio:16/10;left:17cqw;top:11cqw;border:1cqw solid #0D0822;border-radius:3cqw;transform:rotate(-5deg)}
+.c-muaraapp img:nth-of-type(1){width:64cqw;aspect-ratio:16/9;left:6cqw;top:9cqw;border:1cqw solid #0D0822;border-radius:3cqw;transform:rotate(-4deg)}
+.c-muaraapp img:nth-of-type(2){width:30cqw;aspect-ratio:1;right:6cqw;top:22cqw;border-radius:2.4cqw;border:.6cqw solid #fff;transform:rotate(6deg)}
 .c-repatriasi{--bg:radial-gradient(circle at 30% 20%,#A5311B,#2B0A06 75%)}
 .c-repatriasi img{width:36cqw;aspect-ratio:1/1;border:1.3cqw solid #F7F1E6;border-bottom-width:5cqw;border-radius:.6cqw}
 .c-repatriasi img:nth-child(1){left:6cqw;top:6cqw;transform:rotate(-8deg)} .c-repatriasi img:nth-child(2){left:57cqw;top:5cqw;transform:rotate(7deg)} .c-repatriasi img:nth-child(3){left:32cqw;top:12cqw;transform:rotate(-1deg);z-index:2}
@@ -180,7 +181,7 @@ h2 em{font-weight:400;letter-spacing:-.02em;color:var(--blue)} .dark h2 em{color
 .c-influence img{--h:perspective(1400px) rotateY(-10deg) rotateX(5deg) rotate(1deg)}
 .c-simako img:nth-child(1){--h:rotate(-11deg) translateX(-2cqw)} .c-simako img:nth-child(2){--h:rotate(10deg) translateX(2cqw)} .c-simako img:nth-child(3){--h:translateY(-1.5cqw)}
 .c-jalana img{--h:scale(1.7)} .c-abhitek img:nth-child(1){--h:rotate(-1deg)} .c-abhitek img:nth-child(2){--h:rotate(9deg) translateY(-1cqw)}
-.c-muaraapp img{--h:rotate(0deg) scale(1.04)} .c-repatriasi img:nth-child(1){--h:rotate(-13deg) translateX(-2cqw)} .c-repatriasi img:nth-child(2){--h:rotate(12deg) translateX(2cqw)} .c-repatriasi img:nth-child(3){--h:rotate(2deg) translateY(-1.5cqw)}
+.c-muaraapp img:nth-of-type(1){--h:rotate(-1deg) scale(1.03)} .c-muaraapp img:nth-of-type(2){--h:rotate(10deg) translateY(-1cqw)} .c-repatriasi img:nth-child(1){--h:rotate(-13deg) translateX(-2cqw)} .c-repatriasi img:nth-child(2){--h:rotate(12deg) translateX(2cqw)} .c-repatriasi img:nth-child(3){--h:rotate(2deg) translateY(-1.5cqw)}
 .c-vinfast img:nth-of-type(1){--h:rotate(8deg) translateX(1cqw)} .c-vinfast img:nth-of-type(2){--h:rotate(-1deg) scale(1.04)} .c-albarsha img:nth-of-type(1){--h:translate(2cqw,-1cqw)} .c-albarsha img:nth-of-type(2){--h:translateY(-2cqw)} .c-cribl img:nth-of-type(1){--h:rotate(-8deg) translateX(-1cqw)} .c-cribl img:nth-of-type(2){--h:rotate(0deg) scale(1.04)}
 
 /* services rows: nothing changes size on hover */
@@ -336,3 +337,8 @@ h2 em{font-weight:400;letter-spacing:-.02em;color:var(--blue)} .dark h2 em{color
 .vids figure:nth-child(3) video{object-position:50% 30%}
 .vids figcaption{font-size:14px;color:var(--l2);margin-top:10px}
 @media (max-width:980px){.vids{grid-template-columns:1fr}.snip-more{grid-template-columns:1fr 1fr}}
+
+.shots.five{grid-template-columns:repeat(4,1fr)}
+.shots.five figure:first-child{grid-column:span 2;grid-row:span 2}
+.shots.five img{height:100%;object-fit:cover;aspect-ratio:1}
+@media (max-width:980px){.shots.five{grid-template-columns:1fr 1fr}}

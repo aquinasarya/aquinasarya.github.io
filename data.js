@@ -28,7 +28,7 @@ window.DATA = {
     { id: 'muaraapp', name: 'Muara App', sub: 'Turning a museum study tour into an AR lesson', type: 'iPad App', year: '2020', role: 'UI/UX Designer', time: '6 months, 2020', field: 'Museum education',
       about: 'The Muara App is an AR iPad app for student visits to Museum Nasional Indonesia. Modules include an archaeology dig, a true-scale Stegodon in AR and body tracking. It began at the Apple Developer Academy and became the seed of Muara Studio.',
       impacts: [['Objects you can walk around', 'True-scale AR shows students what a glass case cannot.'], ['Learning by doing', 'Each module asks students to act, not only read.'], ['From academy to exhibition', 'The app was shown at the National Museum Jakarta.']],
-      imgs: ['muaraapp-1', 'muaraapp-2', 'muaraapp-3'], url: 'https://muarastudio.com/portfolio/muara-app', cta: 'Read on muarastudio.com',
+      imgs: ['muaraapp-d1', 'muaraapp-d2', 'muaraapp-d3', 'muaraapp-d4', 'muaraapp-d5'], five: true, stills: ['muaraapp-v1', 'muaraapp-v3'], ytPoster: 'muaraapp-v1', url: 'https://muarastudio.com/portfolio/muara-app', cta: 'Read on muarastudio.com',
       yt: '', ytStart: 0 },
     { id: 'repatriasi', name: 'Pameran Repatriasi', sub: 'Bringing returned relics to life for visitors', type: 'Exhibition', year: '2024', role: 'Lead UX Designer', time: '2 months, 2024', field: 'Museum exhibition',
       about: 'For Pameran Repatriasi at Museum Nasional Indonesia, Muara Studio made interactive kiosks, games and AR content about relics returned to Indonesia. I led UX for the second edition, Pitamaha. The approach continued in Pameran NYALA and Sunting in 2025.',
