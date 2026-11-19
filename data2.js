@@ -11,7 +11,7 @@
     repatriasi: { statement: 'I led UX for the kiosks and games with the MDA and Octalysis frameworks. The approach continued in Pameran NYALA and Sunting in 2025.', steps: ['Framed visitor goals with curators', 'Designed kiosk flows and game mechanics', 'Directed 3D scans and AR content', 'Deployed and observed on the exhibition floor'] },
     vinfast: { statement: 'I led the partnership and the experience design, from the booth problem to the app on the show floor.', steps: ['Framed the booth-space problem with the brand', 'Designed the AR flow and information panels', 'Directed 3D and LiDAR work', 'Supported the team on site'] },
     albarsha: { statement: 'I designed the company profile for Albarsha Group, and carried the same system into their decks and the Roster platform for KOL teams.', steps: ['Mapped the group, its seven companies and their services', 'Structured the pages around what brands ask first', 'Designed the layout, type and motion', 'Prepared the cases and the company deck for the site'] },
-    casanira: { statement: 'I set the design direction for client websites at Muara Studio, with Bali Strat and KACA Kreatif built the same way.', steps: ['Found the one thing each brand must say', 'Designed layout, type and motion', 'Worked with developers through launch', 'Prepared content for the CMS'] }
+    cribl: { statement: 'I designed the game and its terminal look so the booth team had a reason for people to stop and a way to follow up.', steps: ['Framed the booth goal: draw visitors, collect leads', 'Designed the rules, hints and time limit', 'Designed the terminal interface for iPad', 'Added the lead form and the leaderboard'] }
   };
   D.projects.forEach((p) => Object.assign(p, X[p.id] || {}));
 
@@ -34,6 +34,7 @@
       ['Sinar Digital Printing', 'Merchandise print', 'https://sinardigitalprinting.vercel.app'],
       ['Full Senyum', 'Print and souvenir', 'https://full-senyum.github.io'],
       ['CKG Recycle', 'Waste management', 'https://ckgrecycle.com/'],
+      ['Casa Nira Uluwatu', 'Luxury villa', 'https://www.casanirauluwatu.com/'],
       ['KACA Kreatif', 'Creative agency', 'https://www.kacakreatif.com/']
     ]],
     ['Exhibitions and activations', [
@@ -42,8 +43,7 @@
       ['Pameran Sunting', 'Museum Nasional, 2025', null, { img: 'sunting-1', text: 'Interactive pieces for an exhibition at Museum Nasional: visitor reflections, live polling on screen and a digital archive kiosk.', facts: [['Venue', 'Museum Nasional Indonesia'], ['Year', '2025'], ['Made', 'Reflections, live polling, digital archive']] }],
       ['Pameran NYALA', 'Galeri Nasional, 2025', null, { img: 'nyala-1', text: 'Interactive pieces for an exhibition at Galeri Nasional: a diary turned into an interactive archive, an AI persona to talk with, and side-by-side painting comparison.', facts: [['Venue', 'Galeri Nasional Indonesia'], ['Year', '2025'], ['Made', 'Interactive archive, AI persona, comparison tool']] }],
       ['VinFast VF3 launch', 'IIMS 2025', null, { vid: 'vinfast-hero', text: 'An AR configurator for the VinFast VF3 launch at JIExpo Kemayoran. Visitors see the car in 360 degrees, switch between 8 colours and place it on the booth floor through the camera.', facts: [['Event', 'IIMS 2025, Jakarta'], ['Role', 'Managing Partner, Muara Studio'], ['Made', 'AR configurator for iPad']], more: ['vinfast-4', 'vinfast-5', 'vinfast-3'], link: ['Open the project page', 'work.html?k=vinfast'] }],
-      ['VinFast showroom AR', 'Roadshow, 2025', null, { vid: 'vinfast-ar', text: 'The AR experience continued after the launch as part of a longer partnership for roadshows and showrooms.', facts: [['Year', '2025'], ['Made', 'AR app for showroom and roadshow use']], more: ['vinfast-1', 'vinfast-2', 'vinfast-4'] }],
-      ['Cribl Password Guess', 'Booth game, Jakarta 2026', null, { vid: 'cribl-hero', text: 'Cribl is a telemetry data platform for IT and security teams. At a technology expo in Jakarta, the Cribl booth with distributor Netpoleon needed a way to draw visitors and collect leads. We made a password-guessing game for iPad with a terminal look: players enter name, organisation and email, then guess a 5-letter word in 10 tries or 2 minutes. A leaderboard keeps people competing and gives the booth team a way to start a conversation.', facts: [['Client', 'Cribl with Netpoleon'], ['Year', '2026'], ['Type', 'Booth game for iPad'], ['Made', 'Game, lead form, hints, leaderboard']], more: ['cribl-1', 'cribl-2', 'cribl-3'], vids: ['cribl-game'] }]
+      ['VinFast showroom AR', 'Roadshow, 2025', null, { vid: 'vinfast-ar', text: 'The AR experience continued after the launch as part of a longer partnership for roadshows and showrooms.', facts: [['Year', '2025'], ['Made', 'AR app for showroom and roadshow use']], more: ['vinfast-5', 'vinfast-3', 'vinfast-4'] }]
     ]],
     ['Products, concepts and decks', [
       ['Arcantara', 'Game UI, with EntPoint', null, { ph: 'Arcantara', text: 'A 3D conservator game for phone and tablet, made with EntPoint Studio. The player restores museum objects in a lab and shows them in a gallery. I design the interface.', facts: [['Type', 'Game interface'], ['With', 'EntPoint Studio'], ['Status', 'In design, 2026']] }],
