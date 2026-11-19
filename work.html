@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selected work · Thomas Arya</title>
+<meta name="description" content="A project by Thomas Arya, product designer in Jakarta.">
+<meta name="theme-color" content="#0A1230">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Unbounded:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="pbar">
+  <a href="index.html#work"><span aria-hidden="true">←</span> All work</a>
+  <a href="index.html"><b>thomasarya</b>™</a>
+  <a href="index.html#contact">Contact</a>
+</header>
+<main id="page"></main>
+<footer class="footer">
+  <span><b>thomasarya</b>™ · Selected Works 2026</span>
+  <span>Jakarta, Indonesia</span>
+  <a href="#">Back to top ↑</a>
+</footer>
+<script src="data.js"></script>
+<script src="data2.js"></script>
+<script src="shared.js"></script>
+<script>
+(() => {
+  const D = window.DATA, { esc, cover, player, reveal, FX } = window.TA;
+  const k = new URLSearchParams(location.search).get('k');
+  let i = D.projects.findIndex((p) => p.id === k); if (i < 0) i = 0;
+  const p = D.projects[i], n = D.projects[(i + 1) % D.projects.length];
+  document.title = `${p.name} · Thomas Arya`;
+  const mail = `mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}`;
+  const shots = p.imgs.length
+    ? `<div class="shots">${p.imgs.map((s, j) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></figure>`).join('')}</div>`
+    : `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
+  document.getElementById('page').innerHTML = `
+  <section class="phero">${FX}
+    <p class="kick" style="color:rgba(255,255,255,.75)">${esc(p.type)} · ${esc(p.year)} · ${String(i + 1).padStart(2, '0')} / ${D.projects.length}</p>
+    <h1>${esc(p.name)}</h1>
+    <p class="sub">${esc(p.sub)}</p>
+    ${cover(p)}
+  </section>
+  <div class="pmeta">
+    <div><small>Role</small><b>${esc(p.role)}</b></div>
+    <div><small>Timeline</small><b>${esc(p.time)}</b></div>
+    <div><small>Field</small><b>${esc(p.field)}</b></div>
+    <div><small>Link</small><b>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.cta)} ↗</a>` : `<a href="${mail}">Case study on request</a>`}</b></div>
+  </div>
+  <section class="section"><div class="pgrid">
+    <div><p class="kick">The project</p><h2>What it is</h2></div>
+    <div class="reveal"><p class="plead">${esc(p.about)}</p></div>
+  </div></section>
+  <section class="section tint"><div class="pgrid">
+    <div><p class="kick">My role</p><h2>What I did</h2></div>
+    <div class="reveal"><p class="plead">${esc(p.statement)}</p>
+      <ol class="steps">${p.steps.map((s, j) => `<li><span>0${j + 1}</span>${esc(s)}</li>`).join('')}</ol></div>
+  </div></section>
+  <section class="section dark" style="overflow:hidden;isolation:isolate">${FX}
+    <div class="section-head" style="position:relative;z-index:1"><p class="kick">Impact</p><h2>What <em>changed.</em></h2></div>
+    <div class="impact">${p.impacts.map((x) => `<article class="glass reveal"><b>${esc(x[0])}</b><p>${esc(x[1])}</p></article>`).join('')}</div>
+  </section>
+  ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart)}</div></section>` : ''}
+  <section class="section"${p.yt ? ' style="padding-top:0"' : ''}>
+    <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
+    ${shots}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px">
+      ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}
+      <a class="btn btn-ink" href="${mail}"><span>Ask for the full case study</span><i aria-hidden="true">→</i></a>
+    </div>
+  </section>
+  <section class="section dark" style="overflow:hidden;isolation:isolate">${FX}
+    <div class="pnext">
+      <div><p class="kick">Next project</p><h2>${esc(n.name)}</h2><p class="section-sub" style="margin:0 0 28px">${esc(n.sub)}</p>
+        <a class="btn" href="work.html?k=${n.id}"><span>Open project</span><i aria-hidden="true">→</i></a></div>
+      <a href="work.html?k=${n.id}" aria-label="${esc(n.name)}">${cover(n)}</a>
+    </div>
+  </section>`;
+  reveal();
+})();
+</script>
+</body>
+</html>

@@ -1,87 +1,107 @@
 (() => {
-  const D = window.DATA, $ = (s, r = document) => r.querySelector(s);
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const D = window.DATA, { esc, reduce, cover, player, reveal } = window.TA, $ = (s, r = document) => r.querySelector(s);
 
-  // Loader: "Thomas Arya" rises letter by letter (Arya bold), bar fills, overlay slides up.
-  const loader = $('#loader'), ln = $('#loaderName');
+  // ── Loader: dots gather into "Thomas Arya" (Arya heavier), a striped bar fills, then the dots burst.
+  const loader = $('#loader');
   let seen = false; try { seen = sessionStorage.getItem('ta-seen') === '1'; } catch (e) {}
-  const done = () => { loader.classList.add('out'); document.body.classList.remove('is-loading'); setTimeout(() => loader.remove(), 1000); try { sessionStorage.setItem('ta-seen', '1'); } catch (e) {} };
-  if (reduce || seen) { loader.remove(); document.body.classList.remove('is-loading'); }
-  else {
-    let i = 0;
-    ln.innerHTML = ['Thomas', ' ', 'Arya'].map((w, wi) => [...w].map((ch) => `<span class="${wi === 2 ? 'b' : ''}"><i style="animation-delay:${(i++ * 0.055).toFixed(3)}s">${ch === ' ' ? '&nbsp;' : ch}</i></span>`).join('')).join('');
-    setTimeout(done, 2100);
-  }
+  const endLoader = () => { loader.classList.add('out'); document.body.classList.remove('is-loading'); setTimeout(() => loader.remove(), 900); try { sessionStorage.setItem('ta-seen', '1'); } catch (e) {} };
+  if (reduce || (seen && !/[?&]intro/.test(location.search))) { loader.remove(); document.body.classList.remove('is-loading'); }
+  else (async () => {
+    const cv = $('#loaderCanvas'), W = 900, H = 240, dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = W * dpr; cv.height = H * dpr;
+    const safety = setTimeout(endLoader, 6000);
+    try { await Promise.race([Promise.all([document.fonts.load('400 150px Inter'), document.fonts.load('800 150px Inter')]), new Promise((r) => setTimeout(r, 1500))]); } catch (e) {}
+    const o = document.createElement('canvas'); o.width = W; o.height = H;
+    const g = o.getContext('2d', { willReadFrequently: true }); g.textBaseline = 'middle'; g.fillStyle = '#fff';
+    let fs = 150; const fam = 'Inter, system-ui, sans-serif';
+    const measure = () => { g.font = `400 ${fs}px ${fam}`; const a = g.measureText('Thomas ').width; g.font = `800 ${fs}px ${fam}`; return [a, g.measureText('Arya').width]; };
+    let [a, b] = measure(); fs = Math.floor(fs * Math.min(1, 860 / (a + b))); [a, b] = measure();
+    const x0 = (W - a - b) / 2;
+    g.font = `400 ${fs}px ${fam}`; g.fillText('Thomas', x0, H / 2 + 6);
+    g.font = `800 ${fs}px ${fam}`; g.fillText('Arya', x0 + a, H / 2 + 6);
+    const px = g.getImageData(0, 0, W, H).data, dots = [], step = 4;
+    for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (px[(y * W + x) * 4 + 3] > 110) {
+      const ang = Math.random() * 6.283, rad = 260 + Math.random() * 260;
+      dots.push({ hx: x, hy: y, x: W / 2 + Math.cos(ang) * rad, y: H / 2 + Math.sin(ang) * rad * 0.5, vx: 0, vy: 0, bold: x >= x0 + a - 2, d: Math.random() * 14 });
+    }
+    const c = cv.getContext('2d'); let frame = 0, raf = 0, free = false;
+    const tick = () => {
+      frame++; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+      for (const p of dots) {
+        if (!free && frame > p.d) { p.vx = (p.vx + (p.hx - p.x) * 0.055) * 0.82; p.vy = (p.vy + (p.hy - p.y) * 0.055) * 0.82; }
+        p.x += p.vx; p.y += p.vy;
+        const sp = Math.hypot(p.vx, p.vy), s = Math.min(2.6, 1 + sp * 0.12), rot = Math.atan2(p.vy, p.vx);
+        c.fillStyle = p.bold ? '#FFFFFF' : '#8FA0D0';
+        c.beginPath(); c.ellipse(p.x, p.y, 1.55 * s, 1.55 / Math.sqrt(s), rot, 0, 6.283); c.fill();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+    setTimeout(() => {
+      clearTimeout(safety); free = true;
+      for (const p of dots) { const dx = p.x - W / 2, dy = p.y - H / 2, dd = Math.hypot(dx, dy) || 1; const f = 6 + Math.random() * 16; p.vx = (dx / dd) * f; p.vy = (dy / dd) * f * 0.7; }
+      setTimeout(() => { endLoader(); setTimeout(() => cancelAnimationFrame(raf), 900); }, 260);
+    }, 2400);
+  })();
 
-  // Marquee
+  // ── Marquee
   const names = D.partners.map((p) => `<span>${esc(p)}</span>`).join('');
   $('#marquee').innerHTML = names + names;
 
-  // Work cards
+  // ── Work cards: each opens its own page
   $('#workGrid').innerHTML = D.projects.map((p, i) => `
-    <button class="wcard reveal" type="button" data-i="${i}" aria-haspopup="dialog">
-      <div class="wthumb">${p.imgs[0] ? `<img src="img/${p.imgs[0]}.jpg" alt="${esc(p.name)}: ${esc(p.sub)}" loading="lazy">` : `<div class="poster"><span>${esc(p.poster[0])}</span><span>${esc(p.poster[1])}</span></div>`}
-        <span class="tag">${esc(p.type)}</span><span class="open" aria-hidden="true">↗</span></div>
+    <a class="wcard reveal" href="work.html?k=${p.id}">
+      <div style="position:relative">${cover(p)}<span class="wtag">${esc(p.type)}</span><span class="wopen" aria-hidden="true">↗</span></div>
       <div class="wmeta"><h3>${esc(p.name)}</h3><span>${String(i + 1).padStart(2, '0')} / ${D.projects.length} · ${esc(p.year)}</span></div>
       <p class="wsub">${esc(p.sub)}</p>
-    </button>`).join('');
+    </a>`).join('');
 
-  // Services, experience, more
+  // ── Services, experience
   $('#services-rows').innerHTML = D.services.map((s, i) => `<div class="reveal"><small>0${i + 1}</small><h3>${esc(s[0])}</h3><p>${esc(s[1])}</p><div class="pills">${s[2].map((x) => `<span>${esc(x)}</span>`).join('')}</div></div>`).join('');
   $('#xp').innerHTML = D.xp.map((x, i) => `<li class="reveal"><span class="n">${i + 1})</span><div><small>${esc(x[0])}</small><h3>${esc(x[1])} <i>at</i> <b>${esc(x[2])}</b></h3><p>${esc(x[3])}</p></div></li>`).join('');
-  $('#more-lists').innerHTML = D.more.map((g) => `<div class="reveal"><h3>${esc(g[0])}</h3><ul>${g[1].map((r) => `<li>${r[2] ? `<a href="${esc(r[2])}" target="_blank" rel="noopener">` : '<div>'}<b>${esc(r[0])}</b><small>${esc(r[1])}</small>${r[2] ? '</a>' : '</div>'}</li>`).join('')}</ul></div>`).join('');
+  $('#talkPlayer').innerHTML = player('8dJPfvxFz30', 7075, 'Starts at 1:57:55');
 
-  // YouTube click-to-load player
-  const yt = (id, start) => `<iframe src="https://www.youtube-nocookie.com/embed/${id}?start=${start || 0}&autoplay=1&rel=0" title="Video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  document.addEventListener('click', (e) => {
-    const b = e.target.closest('.player button'); if (!b) return;
-    const pl = b.parentElement; pl.innerHTML = yt(pl.dataset.id, pl.dataset.start);
+  // ── More work: first 7 rows, the rest behind "See more"; rows with a preview open a modal
+  const SHOW = 7, chev = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 6 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  $('#more-lists').innerHTML = D.more.map((g, gi) => {
+    const rows = g[1].map((r, i) => {
+      const inner = `<b>${esc(r[0])}</b><small>${esc(r[1])}</small>`;
+      const el = r[3] ? `<button type="button" data-g="${gi}" data-i="${i}" aria-haspopup="dialog">${inner}</button>` : r[2] ? `<a href="${esc(r[2])}" target="_blank" rel="noopener">${inner}</a>` : `<div>${inner}</div>`;
+      return `<li${i >= SHOW ? ' class="extra"' : ''}>${el}</li>`;
+    }).join('');
+    const more = g[1].length > SHOW ? `<button class="seemore" type="button" aria-expanded="false"><span>See ${g[1].length - SHOW} more</span>${chev}</button>` : '';
+    return `<div class="reveal"><h3>${esc(g[0])}</h3><ul>${rows}</ul>${more}</div>`;
+  }).join('');
+
+  // ── Modal: event snippet, deck preview, CV preview
+  const dlg = $('#modal'), body = $('#modalBody');
+  const show = (html, wide) => { body.innerHTML = html; dlg.classList.toggle('wide', !!wide); dlg.showModal(); dlg.scrollTop = 0; };
+  const frame = (title, src, note) => `<div class="frame-wrap"><h3 id="modalTitle">${esc(title)}</h3><iframe src="${esc(src)}" title="${esc(title)}" loading="lazy" allowfullscreen></iframe></div><p class="frame-note">${note}</p>`;
+  $('#more-lists').addEventListener('click', (e) => {
+    const sm = e.target.closest('.seemore');
+    if (sm) { const col = sm.parentElement, open = col.classList.toggle('open'); sm.setAttribute('aria-expanded', open); sm.firstElementChild.textContent = open ? 'See less' : `See ${col.querySelectorAll('.extra').length} more`; return; }
+    const b = e.target.closest('button[data-g]'); if (!b) return;
+    const r = D.more[+b.dataset.g][1][+b.dataset.i], m = r[3];
+    if (m.deck) return show(frame(r[0], m.deck, 'Preview mode. If it asks you to sign in, the deck is private: <a href="mailto:aquinasarya@gmail.com?subject=' + encodeURIComponent('Deck request: ' + r[0]) + '">ask me for access</a>.'), true);
+    show(`<div class="snip">
+      <div class="snip-media">${m.img ? `<img src="img/${m.img}.jpg" alt="${esc(r[0])}">` : `${window.TA.FX}<div class="ph">${esc(m.ph || r[0])}</div>`}</div>
+      <div class="snip-body"><p class="kick" style="margin:0">${esc(r[1])}</p><h3 id="modalTitle">${esc(r[0])}</h3><p>${esc(m.text)}</p>
+        <ul class="facts">${m.facts.map((f) => `<li><span>${esc(f[0])}</span><b>${esc(f[1])}</b></li>`).join('')}</ul>
+        ${m.link ? `<a class="btn btn-ink" href="${esc(m.link[1])}"><span>${esc(m.link[0])}</span><i aria-hidden="true">→</i></a>` : ''}</div></div>`);
   });
-
-  // Case dialog
-  const dlg = $('#case'), body = $('#caseBody');
-  const openCase = (p) => {
-    const media = [];
-    if (p.yt) media.push(`<div class="player" data-id="${esc(p.yt)}" data-start="${p.ytStart || 0}"><button type="button" aria-label="Play video"><img src="https://i.ytimg.com/vi/${esc(p.yt)}/hqdefault.jpg" alt=""><span class="play" aria-hidden="true"></span></button></div>`);
-    p.imgs.forEach((n) => media.push(`<img src="img/${n}.jpg" alt="${esc(p.name)} screen" loading="lazy">`));
-    if (!p.imgs.length) media.push(`<div class="poster"><span>${esc(p.poster[0])}</span><span>${esc(p.poster[1])}</span><small>Client work under confidentiality. Screens, flows and the design system are shared in a private walkthrough.</small></div>`);
-    body.innerHTML = `
-      <div>
-        <h3 id="caseTitle">${esc(p.name)}</h3>
-        <p class="case-sub">${esc(p.sub)}</p>
-        <div class="case-tags"><span>${esc(p.type)}</span><span>${esc(p.year)}</span></div>
-        <p class="case-lab">About the project</p><p class="case-about">${esc(p.about)}</p>
-        <div class="case-meta"><div><small>Role</small><b>${esc(p.role)}</b></div><div><small>Timeline</small><b>${esc(p.time)}</b></div><div><small>Field</small><b>${esc(p.field)}</b></div></div>
-        <p class="case-lab">Impact</p>
-        <ul class="case-imp">${p.impacts.map((x) => `<li><i class="dot"></i><div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div></li>`).join('')}</ul>
-        <div class="case-cta">
-          ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : `<a class="case-lock" href="mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}"><i class="dot"></i>${esc(p.cta)}</a>`}
-          ${p.yt ? `<a class="btn" href="https://www.youtube.com/watch?v=${esc(p.yt)}" target="_blank" rel="noopener"><span>Watch the video</span><i aria-hidden="true">▶</i></a>` : ''}
-        </div>
-      </div>
-      <div class="case-media">${media.join('')}</div>`;
-    dlg.showModal(); dlg.scrollTop = 0;
-  };
-  $('#workGrid').addEventListener('click', (e) => { const c = e.target.closest('.wcard'); if (c) openCase(D.projects[+c.dataset.i]); });
-  $('.case-close').addEventListener('click', () => dlg.close());
+  $('#cvPreview').addEventListener('click', () => show(frame('Thomas Arya · CV', 'media/Thomas-Arya-Product-Designer-CV.pdf#view=FitH', 'Cannot see the preview? <a href="media/Thomas-Arya-Product-Designer-CV.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>.'), true));
+  $('.modal-close').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   dlg.addEventListener('close', () => { body.innerHTML = ''; });
 
-  // Reveal on scroll
-  const els = [...document.querySelectorAll('.reveal')];
-  if (reduce || !('IntersectionObserver' in window)) els.forEach((el) => el.classList.add('in'));
-  else {
-    const io = new IntersectionObserver((en) => en.forEach((x) => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { rootMargin: '0px 0px -8% 0px' });
-    els.forEach((el) => io.observe(el));
-  }
+  reveal();
 
-  // Dock appears after the hero
+  // ── Dock appears after the hero
   const dock = $('#dock'), hero = $('.hero');
   const onScroll = () => dock.classList.toggle('show', scrollY > hero.offsetHeight * 0.6);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  // Draggable ID card with a spring back
+  // ── Draggable photo card that springs back
   const card = $('#idcard');
   if (card && !reduce) {
     let sx = 0, sy = 0, on = false;
