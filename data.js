@@ -2,8 +2,8 @@
 // For a project video: set yt to a YouTube id (and ytStart in seconds). The case dialog then shows a player and a "Watch" button.
 const LOCK = 'Full case study on request';
 window.DATA = {
-  // [name, logo file in img/logos]. Logos are white PNGs, all 200 px high.
-  partners: [['Telkomsel', 'telkomsel'], ['Indosat Ooredoo Hutchison', 'indosat'], ['Kementerian Kebudayaan', 'kemenbud'], ['Museum Nasional Indonesia', 'museum-nasional'], ['Galeri Nasional Indonesia', 'galeri-nasional'], ['VinFast', 'vinfast'], ['Apple Developer Academy', 'apple-developer-academy'], ['Historia', 'historia'], ['KITA', 'kita'], ['Flexy', 'flexy'], ['Digital Cellar', 'digital-cellar'], ['Moto Ijo', 'motoijo']],
+  // [name, logo file in img/logos, optional display height]. Default height is 48 px; long wordmarks get a smaller one.
+  partners: [['Telkomsel', 'telkomsel', 28], ['Indosat Ooredoo Hutchison', 'indosat'], ['Kementerian Kebudayaan', 'kemenbud'], ['Museum Nasional Indonesia', 'museum-nasional'], ['Galeri Nasional Indonesia', 'galeri-nasional'], ['VinFast', 'vinfast'], ['Apple Developer Academy', 'apple-developer-academy'], ['Historia', 'historia', 32], ['KITA', 'kita'], ['Flexy', 'flexy', 20], ['Digital Cellar', 'digital-cellar'], ['Moto Ijo', 'motoijo']],
   projects: [
     { id: 'influence', name: 'Providea Influence', sub: 'One workspace for KOL campaigns, from shortlist to payment', type: 'Product Design', year: '2026', role: 'Product Designer', time: '2026, ongoing', field: 'Creator marketing SaaS',
       about: 'Providea Influence is a workspace for KOL specialists, agencies and creators. The hook is a creator catalogue with rates per format and the source of each price. Around it sit briefs, agreements, payments, tax records and reports.',
@@ -52,6 +52,7 @@ window.DATA = {
     ['UX/UI design', 'Research-led interfaces for web and mobile, tested with real users through UAT and usability sessions.', ['User research', 'Design systems', 'Usability testing']],
     ['Web design & build', 'Company and product websites that explain an offer in seconds, designed and built responsive, ready for a CMS.', ['Responsive design', 'Motion', 'Front-end build']],
     ['Interactive & AR', 'Kiosks, games and AR for museums, exhibitions and showrooms, using 3D scans and gamification frameworks.', ['AR & LiDAR', 'Gamification', 'Exhibition UX']],
+    ['AI-assisted delivery', 'I steer AI agents, for chat and for code, and run multi-agent workflows to research, build and check work faster. The design decisions stay mine.', ['Claude Code', 'Agent workflows', 'Review & QA']],
     ['Decks & strategy', 'Pitch, company profile and product decks that carry a clear argument from problem to proposal.', ['Storyline', 'Figma Slides', 'Pitch support']]
   ],
   xp: [

@@ -45,7 +45,7 @@
   })();
 
   // ── Marquee
-  const names = D.partners.map((p) => `<img src="img/logos/${p[1]}.png" alt="${esc(p[0])}" height="48">`).join('');
+  const names = D.partners.map((p) => `<img src="img/logos/${p[1]}.png" alt="${esc(p[0])}" style="height:${p[2] || 48}px">`).join('');
   $('#marquee').innerHTML = names + names;
 
   // ── Work cards: each opens its own page
