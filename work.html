@@ -64,7 +64,8 @@
     <div class="impact">${p.impacts.map((x) => `<article class="glass reveal"><b>${esc(x[0])}</b><p>${esc(x[1])}</p></article>`).join('')}</div>
   </section>
   ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart)}</div></section>` : ''}
-  <section class="section"${p.yt ? ' style="padding-top:0"' : ''}>
+  ${p.vids ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="vids">${p.vids.map((v, j) => `<figure class="reveal${j === 0 ? ' big' : ''}"><video src="media/${v[0]}.mp4" poster="media/${v[0]}.jpg" ${j === 0 ? 'autoplay' : 'controls preload="none"'} muted loop playsinline></video><figcaption>${esc(v[1])}</figcaption></figure>`).join('')}</div></section>` : ''}
+  <section class="section"${p.yt || p.vids ? ' style="padding-top:0"' : ''}>
     <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
     ${p.shotsNote ? `<p class="shots-note">${esc(p.shotsNote)}</p>` : ''}
     ${shots}

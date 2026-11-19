@@ -84,10 +84,11 @@
     const r = D.more[+b.dataset.g][1][+b.dataset.i], m = r[3];
     if (m.deck) return show(frame(r[0], m.deck, 'Preview mode. If it asks you to sign in, the deck is private: <a href="mailto:aquinasarya@gmail.com?subject=' + encodeURIComponent('Deck request: ' + r[0]) + '">ask me for access</a>.'), true);
     show(`<div class="snip">
-      <div class="snip-media">${m.img ? `<img src="img/${m.img}.jpg" alt="${esc(r[0])}">` : `${window.TA.FX}<div class="ph">${esc(m.ph || r[0])}</div>`}</div>
+      <div class="snip-media">${m.vid ? `<video src="media/${m.vid}.mp4" poster="media/${m.vid}.jpg" autoplay muted loop playsinline aria-label="${esc(r[0])} video"></video>` : m.img ? `<img src="img/${m.img}.jpg" alt="${esc(r[0])}">` : `${window.TA.FX}<div class="ph">${esc(m.ph || r[0])}</div>`}</div>
       <div class="snip-body"><p class="kick" style="margin:0">${esc(r[1])}</p><h3 id="modalTitle">${esc(r[0])}</h3><p>${esc(m.text)}</p>
         <ul class="facts">${m.facts.map((f) => `<li><span>${esc(f[0])}</span><b>${esc(f[1])}</b></li>`).join('')}</ul>
-        ${m.link ? `<a class="btn btn-ink" href="${esc(m.link[1])}"><span>${esc(m.link[0])}</span><i aria-hidden="true">→</i></a>` : ''}</div></div>`);
+        ${m.link ? `<a class="btn btn-ink" href="${esc(m.link[1])}"><span>${esc(m.link[0])}</span><i aria-hidden="true">→</i></a>` : ''}</div></div>
+      ${m.more || m.vids ? `<div class="snip-more">${(m.vids || []).map((v) => `<video src="media/${v}.mp4" poster="media/${v}.jpg" controls muted loop playsinline preload="none"></video>`).join('')}${(m.more || []).map((n) => `<img src="img/${n}.jpg" alt="${esc(r[0])}" loading="lazy">`).join('')}</div>` : ''}`);
   });
   $('#cvPreview').addEventListener('click', () => show(frame('Thomas Arya · CV', 'media/Thomas-Arya-Product-Designer-CV.pdf#view=FitH', 'Cannot see the preview? <a href="media/Thomas-Arya-Product-Designer-CV.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>.'), true));
   $('.modal-close').addEventListener('click', () => dlg.close());
