@@ -45,15 +45,15 @@
   })();
 
   // ── Marquee
-  const names = D.partners.map((p) => `<span>${esc(p)}</span>`).join('');
+  const names = D.partners.map((p) => `<img src="img/logos/${p[1]}.png" alt="${esc(p[0])}" height="48">`).join('');
   $('#marquee').innerHTML = names + names;
 
   // ── Work cards: each opens its own page
   $('#workGrid').innerHTML = D.projects.map((p, i) => `
     <a class="wcard reveal" href="work.html?k=${p.id}">
-      <div style="position:relative">${cover(p)}<span class="wtag">${esc(p.type)}</span><span class="wopen" aria-hidden="true">↗</span></div>
-      <div class="wmeta"><h3>${esc(p.name)}</h3><span>${String(i + 1).padStart(2, '0')} / ${D.projects.length} · ${esc(p.year)}</span></div>
-      <p class="wsub">${esc(p.sub)}</p>
+      ${cover(p)}<span class="wtag">${esc(p.type)}</span>
+      <span class="wcap"><span><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></span><i aria-hidden="true">↗</i></span>
+      <span class="wnum">${String(i + 1).padStart(2, '0')}</span>
     </a>`).join('');
 
   // ── Services, experience

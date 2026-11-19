@@ -2,7 +2,8 @@
 // For a project video: set yt to a YouTube id (and ytStart in seconds). The case dialog then shows a player and a "Watch" button.
 const LOCK = 'Full case study on request';
 window.DATA = {
-  partners: ['Telkomsel', 'Indosat', 'Kemenbud', 'Museum Nasional', 'Galeri Nasional', 'VinFast', 'Apple Developer Academy', 'Albarsha Group', 'Providea', 'Historia', 'KITA', 'Flexy', 'The Digital Cellar', 'Kruang Desain', 'ABHITEK', 'Casa Nira', 'Bali Strat', 'KACA Kreatif', 'Moto Ijo'],
+  // [name, logo file in img/logos]. Logos are white PNGs, all 200 px high.
+  partners: [['Telkomsel', 'telkomsel'], ['Indosat Ooredoo Hutchison', 'indosat'], ['Kementerian Kebudayaan', 'kemenbud'], ['Museum Nasional Indonesia', 'museum-nasional'], ['Galeri Nasional Indonesia', 'galeri-nasional'], ['VinFast', 'vinfast'], ['Apple Developer Academy', 'apple-developer-academy'], ['Historia', 'historia'], ['KITA', 'kita'], ['Flexy', 'flexy'], ['Digital Cellar', 'digital-cellar'], ['Moto Ijo', 'motoijo']],
   projects: [
     { id: 'influence', name: 'Providea Influence', sub: 'One workspace for KOL campaigns, from shortlist to payment', type: 'Product Design', year: '2026', role: 'Product Designer', time: '2026, ongoing', field: 'Creator marketing SaaS',
       about: 'Providea Influence is a workspace for KOL specialists, agencies and creators. The hook is a creator catalogue with rates per format and the source of each price. Around it sit briefs, agreements, payments, tax records and reports.',
@@ -13,9 +14,9 @@ window.DATA = {
       impacts: [['14 museums, one system', 'Collections that lived in separate files now share one record and one vocabulary.'], ['Condition at a glance', 'Four condition levels with fixed colours let conservators read a storage room in seconds.'], ['Tested before trusted', 'User acceptance testing covered 210 scenarios with museum staff.']],
       imgs: ['simako-2', 'simako-3', 'simako-4'], cta: LOCK },
     { id: 'avp', name: 'Telkomsel AVP Dashboard', sub: 'Revamping a telco dashboard, module by module', type: 'Product Design', year: '2024', role: 'Product Designer', time: '2024 to present', field: 'Telco',
-      about: 'At Immobi I work with business analysts to revamp modules of Telkomsel’s AVP Dashboard: BIANCA, DIANA, MONA, ENOM and IPTV. The work covers information architecture, user flows and a shared design system. This is client work under confidentiality, so screens are shared in a private walkthrough.',
+      about: 'At Immobi I work with business analysts to revamp modules of Telkomsel’s AVP Dashboard: BIANCA, DIANA, MONA, ENOM and IPTV. The work covers information architecture, user flows and a shared design system. This is client work under confidentiality, so the screens shown here are redrawn with sample data.',
       impacts: [['18% less churn', 'Usability changes raised adoption and reduced churn on key AVP features.'], ['One design system', 'A streamlined Figma library keeps every module consistent.'], ['Clearer paths', 'Reworked information architecture shortens the way to each task.']],
-      imgs: [], poster: ['Five modules,', 'one system'], cta: LOCK },
+      imgs: ['avp-1', 'avp-2', 'avp-3'], shotsNote: 'These three screens are redrawn concepts with sample data and neutral names. The real modules are shared in a private walkthrough.', cta: LOCK },
     { id: 'jalana', name: 'Jalana', sub: 'A museum passport in your pocket', type: 'Mobile Design', year: '2026', role: 'Product owner and designer', time: '2026, in development', field: 'Museums and tourism',
       about: 'Jalana is a digital museum passport by Muara Studio. Visitors check in at museums, collect cards and badges, and keep a notebook of what they saw. The work covers the phone and tablet app, a CMS, a promo site and a motion film.',
       impacts: [['A reason to visit the next museum', 'Cards and badges turn single visits into a collection.'], ['Phone and tablet together', 'Every screen is designed for both sizes from the start.'], ['One source of content', 'Museum teams edit their own content in the CMS.']],
@@ -37,10 +38,10 @@ window.DATA = {
       about: 'For the VinFast VF3 launch at IIMS 2025, Muara Studio built an AR experience that shows the car and its colour variants where booth space is limited. It is part of a longer partnership for exhibitions and showrooms.',
       impacts: [['Every colour, one spot', 'Visitors switch colour variants in AR instead of walking a line of cars.'], ['Look inside', 'An interior view and an information panel answer questions at a glance.'], ['A partnership, not a one-off', 'The work led to a long-term digital activation partnership.']],
       imgs: ['vinfast-1', 'vinfast-3', 'vinfast-2'], cta: LOCK },
-    { id: 'roster', name: 'Albarsha Roster', sub: 'A KOL roster an agency can run on', type: 'Product Design', year: '2026', role: 'Product Designer', time: '2026', field: 'Agency tools',
-      about: 'Albarsha Roster is a KOL management platform for Albarsha Group. It covers the roster, brief to shortlist, campaign tracking and follow-up over WhatsApp. I also designed Albarsha’s company profile and pitch decks.',
-      impacts: [['Shortlists in minutes', 'Filters and ratings turn a brief into a shortlist the team can share.'], ['Campaigns you can follow', 'Each creator’s status is visible from brief to report.'], ['One voice in every deck', 'Company profile and pitch decks share one visual system.']],
-      imgs: ['roster-1'], url: 'https://muara-studio.github.io/rosterKOL/', cta: 'Open preview' },
+    { id: 'albarsha', name: 'Albarsha Group Company Profile', sub: 'One site for a group of seven creative companies', type: 'Web Design', year: '2026', role: 'Product Designer (project based)', time: 'May to Aug 2026', field: 'Marketing and brand activation',
+      about: 'Albarsha Group is a digital marketing and brand activation ecosystem: strategy, activation, production, creator network and livestream under one roof. The company profile site puts the group, its companies and its work in one place, in English and Indonesian.',
+      impacts: [['One front door', 'Work, About, Capabilities, Network and Insights answer the first questions a brand asks.'], ['Work that shows results', 'Fourteen campaigns are shown as cases with the client, the category and the outcome.'], ['Ready to talk', 'Every page ends in a WhatsApp conversation, and the full company deck opens on the site.']],
+      imgs: ['albarsha-1', 'albarsha-2', 'albarsha-3'], url: 'https://www.albarsha.group', cta: 'Open albarsha.group' },
     { id: 'casanira', name: 'Casa Nira Uluwatu', sub: 'A villa website that reads like a journal', type: 'Web Design', year: 'Live', role: 'Design direction', time: 'Live site', field: 'Hospitality',
       about: 'Casa Nira Uluwatu is a luxury villa in Bali. The website uses full-screen visuals and scroll animation to sell the stay before the first enquiry. It is one of the client websites delivered through Muara Studio, with Bali Strat and KACA Kreatif.',
       impacts: [['The villa comes first', 'Full-screen photography carries the page and the interface stays quiet.'], ['A calm scroll', 'Motion follows the reader instead of interrupting.'], ['More live sites', 'Bali Strat, KACA Kreatif, Moto Ijo and Nurseri Lestari get the same care.']],

@@ -10,7 +10,7 @@
     muaraapp: { statement: 'I designed the interface and visual assets with my academy team, using a challenge-based learning framework.', steps: ['Researched student tours with the museum', 'Designed the AR modules and interface', 'Created the visual assets', 'Tested and exhibited at the museum'], yt: '7tJlfobtm6U', ytStart: 3 },
     repatriasi: { statement: 'I led UX for the kiosks and games with the MDA and Octalysis frameworks. The approach continued in Pameran NYALA and Sunting in 2025.', steps: ['Framed visitor goals with curators', 'Designed kiosk flows and game mechanics', 'Directed 3D scans and AR content', 'Deployed and observed on the exhibition floor'] },
     vinfast: { statement: 'I led the partnership and the experience design, from the booth problem to the app on the show floor.', steps: ['Framed the booth-space problem with the brand', 'Designed the AR flow and information panels', 'Directed 3D and LiDAR work', 'Supported the team on site'] },
-    roster: { statement: 'I designed the platform from the agency’s own workbook and process, and carried the same system into their decks.', steps: ['Studied the team’s workbook and process', 'Scoped the platform to KOL work only', 'Designed roster, shortlist and tracking', 'Published an anonymised preview'], time: 'May to Aug 2026' },
+    albarsha: { statement: 'I designed the company profile for Albarsha Group, and carried the same system into their decks and the Roster platform for KOL teams.', steps: ['Mapped the group, its seven companies and their services', 'Structured the pages around what brands ask first', 'Designed the layout, type and motion', 'Prepared the cases and the company deck for the site'] },
     casanira: { statement: 'I set the design direction for client websites at Muara Studio, with Bali Strat and KACA Kreatif built the same way.', steps: ['Found the one thing each brand must say', 'Designed layout, type and motion', 'Worked with developers through launch', 'Prepared content for the CMS'] }
   };
   D.projects.forEach((p) => Object.assign(p, X[p.id] || {}));
@@ -24,7 +24,7 @@
     ['Websites', [
       ['muarastudio.com', 'Studio site + CMS', 'https://muarastudio.com'],
       ['Providea', 'Brand site', 'https://muara-studio.github.io/providea/'],
-      ['albarsha.group', 'Company site', 'https://albarsha.group'],
+      ['albarsha.group', 'Company site', 'https://www.albarsha.group'],
       ['Nurseri Lestari', 'Plant nursery', 'https://nurserilestari.com'],
       ['Moto Ijo', 'EV dealer', 'https://muara-studio.github.io/motoijo/'],
       ['Berkah Prima Karya', 'Glass and aluminium', 'https://berkahprimakarya.com/'],
@@ -47,6 +47,7 @@
     ]],
     ['Products, concepts and decks', [
       ['Arcantara', 'Game UI, with EntPoint', null, { ph: 'Arcantara', text: 'A 3D conservator game for phone and tablet, made with EntPoint Studio. The player restores museum objects in a lab and shows them in a gallery. I design the interface.', facts: [['Type', 'Game interface'], ['With', 'EntPoint Studio'], ['Status', 'In design, 2026']] }],
+      ['Albarsha Roster', 'KOL platform preview', 'https://muara-studio.github.io/rosterKOL/'],
       ['Muara POC library', 'Proofs of concept', 'https://muarastudio.com/poc'],
       ['Himalaya community app', 'Concept site', 'https://muara-studio.github.io/himalaya-wellness/'],
       ['ZISWAF Indosat', 'Crowdfunding platform', 'https://amalbaik.org/'],

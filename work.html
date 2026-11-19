@@ -66,6 +66,7 @@
   ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart)}</div></section>` : ''}
   <section class="section"${p.yt ? ' style="padding-top:0"' : ''}>
     <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
+    ${p.shotsNote ? `<p class="shots-note">${esc(p.shotsNote)}</p>` : ''}
     ${shots}
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px">
       ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}

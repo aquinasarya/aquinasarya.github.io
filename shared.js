@@ -9,13 +9,13 @@ window.TA = (() => {
   const covers = {
     influence: (p) => `${img('influence-1', p.name + ' earnings screen')}<span class="chip glass">Rates with a source</span>`,
     simako: (p) => `${img('simako-3', '')}${img('simako-4', '')}${img('simako-2', p.name + ' dashboard')}<span class="chip glass">14 museums, one record</span>`,
-    avp: () => `<span class="chip glass lock">Screens on request</span><div class="mods">${['BIANCA', 'DIANA', 'MONA', 'ENOM', 'IPTV'].map((m) => `<span class="chip glass">${m}</span>`).join('')}</div><span class="w">18%</span>`,
+    avp: (p) => `${img('avp-2', '')}${img('avp-3', '')}${img('avp-1', p.name + ' redrawn coverage map, sample data')}<span class="w">18%</span><span class="chip glass lock">Redrawn · sample data</span>`,
     jalana: (p) => `${img('jalana-3', p.name + ' app screens')}<span class="w">Jalana</span>`,
     abhitek: (p) => `${img('abhitek-1', p.name + ' web console')}${img('abhitek-3', p.name + ' phone app')}<span class="chip">Office console + field app</span>`,
     muaraapp: (p) => `${[92, 72, 52].map((s) => `<i class="ring" style="width:${s}cqw;height:${s}cqw"></i>`).join('')}${img('muaraapp-1', p.name + ' AR modules')}`,
     repatriasi: (p) => `${img('sunting-1', '')}${img('nyala-1', '')}${img('repatriasi-1', p.name + ' kiosks and games')}<span class="w">Repatriasi</span>`,
     vinfast: (p) => `<span class="w">VF3<br>in AR</span>${img('vinfast-1', p.name)}<div class="sw">${['#F2C230', '#E94B3C', '#2F6BFF', '#1FA97A', '#F4F4F4', '#111'].map((c) => `<i style="background:${c}"></i>`).join('')}</div>`,
-    roster: (p) => `<div class="flow"><span class="chip glass">Brief</span>→<span class="chip glass">Shortlist</span>→<span class="chip glass">Campaign</span></div>${img('roster-1', p.name + ' shortlist screen')}`,
+    albarsha: (p) => `<div class="flow"><span class="chip glass">Work</span><span class="chip glass">Capabilities</span><span class="chip glass">Network</span></div>${img('albarsha-2', '')}${img('albarsha-1', p.name + ' home page')}`,
     casanira: (p) => `<span class="w">Casa<br><em>Nira</em></span><span class="cap">Uluwatu, Bali</span>${img('casanira-2', p.name + ' website')}`
   };
   const cover = (p) => `<div class="cov c-${p.id}">${covers[p.id](p)}</div>`;
