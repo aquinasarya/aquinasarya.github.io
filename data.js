@@ -1,0 +1,73 @@
+// Content for the portfolio. Edit here; app.js renders it.
+// For a project video: set yt to a YouTube id (and ytStart in seconds). The case dialog then shows a player and a "Watch" button.
+const LOCK = 'Full case study on request';
+window.DATA = {
+  partners: ['Telkomsel', 'Indosat', 'Kemenbud', 'Museum Nasional', 'Galeri Nasional', 'VinFast', 'Apple Developer Academy', 'Albarsha Group', 'Providea', 'Historia', 'KITA', 'Flexy', 'The Digital Cellar', 'Kruang Desain', 'ABHITEK', 'Casa Nira', 'Bali Strat', 'KACA Kreatif', 'Moto Ijo'],
+  projects: [
+    { id: 'influence', name: 'Providea Influence', sub: 'One workspace for KOL campaigns, from shortlist to payment', type: 'Product Design', year: '2026', role: 'Product Designer', time: '2026, ongoing', field: 'Creator marketing SaaS',
+      about: 'Providea Influence is a workspace for KOL specialists, agencies and creators. The hook is a creator catalogue with rates per format and the source of each price. Around it sit briefs, agreements, payments, tax records and reports.',
+      impacts: [['Rates you can trace', 'Every price shows its format and its source, so a shortlist can be defended to a client.'], ['Brief to payment in one place', 'Briefs, agreements, payments and tax records live with the campaign.'], ['A system, not a set of screens', 'A design system in Figma and a working web app keep design and build in step.']],
+      imgs: ['influence-1', 'influence-3', 'influence-2'], url: 'https://muara-studio.github.io/providea/influence/', cta: 'Open live demo' },
+    { id: 'simako', name: 'SIMAKO', sub: 'One collection record for Indonesia’s national museums', type: 'Web App', year: '2025', role: 'Design lead, Muara Studio', time: '2025 to 2026', field: 'Museum collections',
+      about: 'SIMAKO is the collection management system for museums under Indonesia’s Ministry of Culture. It records, tracks and monitors collections, movements, loans and condition in one platform. Screens show staging data.',
+      impacts: [['14 museums, one system', 'Collections that lived in separate files now share one record and one vocabulary.'], ['Condition at a glance', 'Four condition levels with fixed colours let conservators read a storage room in seconds.'], ['Tested before trusted', 'User acceptance testing covered 210 scenarios with museum staff.']],
+      imgs: ['simako-2', 'simako-3', 'simako-4'], cta: LOCK },
+    { id: 'avp', name: 'Telkomsel AVP Dashboard', sub: 'Revamping a telco dashboard, module by module', type: 'Product Design', year: '2024', role: 'Product Designer', time: '2024 to present', field: 'Telco',
+      about: 'At Immobi I work with business analysts to revamp modules of Telkomsel’s AVP Dashboard: BIANCA, DIANA, MONA, ENOM and IPTV. The work covers information architecture, user flows and a shared design system. This is client work under confidentiality, so screens are shared in a private walkthrough.',
+      impacts: [['18% less churn', 'Usability changes raised adoption and reduced churn on key AVP features.'], ['One design system', 'A streamlined Figma library keeps every module consistent.'], ['Clearer paths', 'Reworked information architecture shortens the way to each task.']],
+      imgs: [], poster: ['Five modules,', 'one system'], cta: LOCK },
+    { id: 'jalana', name: 'Jalana', sub: 'A museum passport in your pocket', type: 'Mobile Design', year: '2026', role: 'Product owner and designer', time: '2026, in development', field: 'Museums and tourism',
+      about: 'Jalana is a digital museum passport by Muara Studio. Visitors check in at museums, collect cards and badges, and keep a notebook of what they saw. The work covers the phone and tablet app, a CMS, a promo site and a motion film.',
+      impacts: [['A reason to visit the next museum', 'Cards and badges turn single visits into a collection.'], ['Phone and tablet together', 'Every screen is designed for both sizes from the start.'], ['One source of content', 'Museum teams edit their own content in the CMS.']],
+      imgs: ['jalana-3'], url: 'https://muara-studio.github.io/jalana/', cta: 'Open promo site' },
+    { id: 'abhitek', name: 'ABHITEK', sub: 'Safety equipment you can account for', type: 'Web + Mobile', year: '2026', role: 'Product designer, front end', time: '2026', field: 'Safety and assets',
+      about: 'ABHITEK Safety Asset Manager tracks safety equipment for field teams: what exists, where it is and when it was last inspected. A web console serves the office and a phone app serves the field.',
+      impacts: [['Inspections on schedule', 'Due and overdue checks sit at the top of the list.'], ['Built for the field', 'The phone app uses large targets and strong contrast for outdoor work.'], ['One record per item', 'Each item carries its history from hand-over to disposal.']],
+      imgs: ['abhitek-1', 'abhitek-2', 'abhitek-3'], url: 'https://muara-studio.github.io/abhitek/', cta: 'Open live demo' },
+    { id: 'muaraapp', name: 'Muara App', sub: 'Turning a museum study tour into an AR lesson', type: 'iPad App', year: '2020', role: 'UI/UX Designer', time: '6 months, 2020', field: 'Museum education',
+      about: 'The Muara App is an AR iPad app for student visits to Museum Nasional Indonesia. Modules include an archaeology dig, a true-scale Stegodon in AR and body tracking. It began at the Apple Developer Academy and became the seed of Muara Studio.',
+      impacts: [['Objects you can walk around', 'True-scale AR shows students what a glass case cannot.'], ['Learning by doing', 'Each module asks students to act, not only read.'], ['From academy to exhibition', 'The app was shown at the National Museum Jakarta.']],
+      imgs: ['muaraapp-1', 'muaraapp-2', 'muaraapp-3'], url: 'https://muarastudio.com/portfolio/muara-app', cta: 'Read on muarastudio.com',
+      yt: '', ytStart: 0 },
+    { id: 'repatriasi', name: 'Pameran Repatriasi', sub: 'Bringing returned relics to life for visitors', type: 'Exhibition', year: '2024', role: 'Lead UX Designer', time: '2 months, 2024', field: 'Museum exhibition',
+      about: 'For Pameran Repatriasi at Museum Nasional Indonesia, Muara Studio made interactive kiosks, games and AR content about relics returned to Indonesia. I led UX for the second edition, Pitamaha. The approach continued in Pameran NYALA and Sunting in 2025.',
+      impacts: [['89% more interaction', 'Puzzle games, storytelling and Javanese script modules raised visitor interaction.'], ['30% better retention', '3D-scanned artifacts and AR content kept visitors longer.'], ['Delivered in 2 months', 'A multidisciplinary team designed and deployed with national institutions.']],
+      imgs: ['repatriasi-1', 'nyala-1', 'sunting-1'], cta: LOCK },
+    { id: 'vinfast', name: 'VinFast VF3 AR', sub: 'A full line-up on a small booth floor', type: 'AR Experience', year: '2025', role: 'Managing Partner', time: '2025', field: 'Automotive',
+      about: 'For the VinFast VF3 launch at IIMS 2025, Muara Studio built an AR experience that shows the car and its colour variants where booth space is limited. It is part of a longer partnership for exhibitions and showrooms.',
+      impacts: [['Every colour, one spot', 'Visitors switch colour variants in AR instead of walking a line of cars.'], ['Look inside', 'An interior view and an information panel answer questions at a glance.'], ['A partnership, not a one-off', 'The work led to a long-term digital activation partnership.']],
+      imgs: ['vinfast-1', 'vinfast-3', 'vinfast-2'], cta: LOCK },
+    { id: 'roster', name: 'Albarsha Roster', sub: 'A KOL roster an agency can run on', type: 'Product Design', year: '2026', role: 'Product Designer', time: '2026', field: 'Agency tools',
+      about: 'Albarsha Roster is a KOL management platform for Albarsha Group. It covers the roster, brief to shortlist, campaign tracking and follow-up over WhatsApp. I also designed Albarsha’s company profile and pitch decks.',
+      impacts: [['Shortlists in minutes', 'Filters and ratings turn a brief into a shortlist the team can share.'], ['Campaigns you can follow', 'Each creator’s status is visible from brief to report.'], ['One voice in every deck', 'Company profile and pitch decks share one visual system.']],
+      imgs: ['roster-1'], url: 'https://muara-studio.github.io/rosterKOL/', cta: 'Open preview' },
+    { id: 'casanira', name: 'Casa Nira Uluwatu', sub: 'A villa website that reads like a journal', type: 'Web Design', year: 'Live', role: 'Design direction', time: 'Live site', field: 'Hospitality',
+      about: 'Casa Nira Uluwatu is a luxury villa in Bali. The website uses full-screen visuals and scroll animation to sell the stay before the first enquiry. It is one of the client websites delivered through Muara Studio, with Bali Strat and KACA Kreatif.',
+      impacts: [['The villa comes first', 'Full-screen photography carries the page and the interface stays quiet.'], ['A calm scroll', 'Motion follows the reader instead of interrupting.'], ['More live sites', 'Bali Strat, KACA Kreatif, Moto Ijo and Nurseri Lestari get the same care.']],
+      imgs: ['casanira-1', 'casanira-2', 'casanira-3'], url: 'https://www.casanirauluwatu.com/', cta: 'Open live site' }
+  ],
+  services: [
+    ['Product design', 'End-to-end product thinking. I frame the real problem, map the flows and shape an interface a team can ship and scale.', ['Problem framing', 'User flows & IA', 'Prototypes']],
+    ['UX/UI design', 'Research-led interfaces for web and mobile, tested with real users through UAT and usability sessions.', ['User research', 'Design systems', 'Usability testing']],
+    ['Web design & build', 'Company and product websites that explain an offer in seconds, designed and built responsive, ready for a CMS.', ['Responsive design', 'Motion', 'Front-end build']],
+    ['Interactive & AR', 'Kiosks, games and AR for museums, exhibitions and showrooms, using 3D scans and gamification frameworks.', ['AR & LiDAR', 'Gamification', 'Exhibition UX']],
+    ['Decks & strategy', 'Pitch, company profile and product decks that carry a clear argument from problem to proposal.', ['Storyline', 'Figma Slides', 'Pitch support']]
+  ],
+  xp: [
+    ['2026 · Present', 'Product Designer', 'Providea', 'Shaped the brand and designed Influence and Loyalty, two SaaS products.'],
+    ['2026 · Present', 'Product Designer', 'Albarsha Group', 'Roster KOL platform, a community app concept and pitch decks.'],
+    ['Oct 2023 · Present', 'Managing Partner', 'Muara Studio', 'SIMAKO, Jalana, museum exhibitions, VinFast AR and muarastudio.com.'],
+    ['May 2024 · Present', 'Product Designer', 'Immobi (Telkomsel)', 'AVP Dashboard revamp and design system. Churn down 18% on key features.'],
+    ['Jul 2023 · Dec 2023', 'Product Designer', 'Solusi Digital Ekosistem (Indosat)', 'ZISWAF crowdfunding platform. Engagement up 25%.'],
+    ['May 2023 · Aug 2023', 'UI/UX Designer', 'Flexy Teknologi Global', 'Design system and DMS SaaS app. Support tickets down 10%.'],
+    ['Jun 2023 · Aug 2023', 'Web Designer', 'The Digital Cellar', 'Four company profiles for an Australian agency.'],
+    ['Mar 2022 · May 2023', 'Product Designer', 'Kita Keluarga Indonesia', 'KITA Apps V1 to Kita Care. Mentored 3 junior designers.'],
+    ['Sep 2021 · May 2022', 'Senior UI/UX Designer', 'Kruang Desain', 'Product design and design systems for small-business clients.'],
+    ['Feb 2020 · Sep 2021', 'Junior UI/UX Designer', 'Apple Developer Academy', 'Five iOS apps, including the Muara App for Museum Nasional.']
+  ],
+  more: [
+    ['Websites', [['muarastudio.com', 'Studio site + CMS', 'https://muarastudio.com'], ['Providea', 'Brand site', 'https://muara-studio.github.io/providea/'], ['Providea Loyalty', 'Product demo', 'https://muara-studio.github.io/providea/loyalty/'], ['albarsha.group', 'Company site', 'https://albarsha.group'], ['Bali Strat', 'Property advisory', 'https://www.balistrat.com/'], ['KACA Kreatif', 'Creative agency', 'https://www.kacakreatif.com/'], ['Moto Ijo', 'EV dealer', 'https://muara-studio.github.io/motoijo/'], ['Nurseri Lestari', 'Plant nursery', 'https://nurserilestari.com'], ['Sinar Digital Printing', 'Merchandise print', 'https://sinardigitalprinting.vercel.app'], ['Full Senyum', 'Print and souvenir', 'https://full-senyum.github.io'], ['Berkah Prima Karya', 'Glass and aluminium', 'https://berkahprimakarya.com/'], ['CKG Recycle', 'Waste management', 'https://ckgrecycle.com/'], ['Talia Little Wonders', 'Baby skincare', 'https://talia-mu.vercel.app/']]],
+    ['Exhibitions and activations', [['Pameran Repatriasi', 'Museum Nasional, 2023'], ['Repatriasi 2.0 Pitamaha', 'Museum Nasional, 2024'], ['Pameran Sunting', 'Museum Nasional, 2025'], ['Pameran NYALA', 'Galeri Nasional, 2025'], ['VinFast VF3 launch', 'IIMS 2025'], ['VinFast showroom AR', 'Roadshow, 2025'], ['Cribl IndoSec Summit', 'Event activation, 2026']]],
+    ['Products, concepts and decks', [['Arcantara', 'Game UI, with EntPoint'], ['Muara POC library', 'Proofs of concept', 'https://muarastudio.com/poc'], ['Himalaya community app', 'Concept site', 'https://muara-studio.github.io/himalaya-wellness/'], ['Albarsha company profile', 'Deck, 2026'], ['COCAF 2026', 'Pitch deck'], ['BSI 2027 activation', 'Pitch deck'], ['Well Beyond 360', 'Campaign deck'], ['ZISWAF Indosat', 'Crowdfunding platform'], ['KITA Apps', 'Mobile app, 2022'], ['Flexy DMS', 'SaaS app, 2023'], ['YomConnect', 'Website, 2023'], ['PVOT Digital, Troka', 'Small-business products']]]
+  ]
+};
