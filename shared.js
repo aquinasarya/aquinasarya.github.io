@@ -12,7 +12,7 @@ window.TA = (() => {
     avp: (p) => `${img('avp-2', '')}${img('avp-3', '')}${img('avp-1', p.name + ' redrawn coverage map, sample data')}<span class="w">18%</span><span class="chip glass lock">Redrawn · sample data</span>`,
     jalana: (p) => `${img('jalana-3', p.name + ' app screens')}<span class="w">Jalana</span>`,
     abhitek: (p) => `${img('abhitek-1', p.name + ' web console')}${img('abhitek-3', p.name + ' phone app')}<span class="chip">Office console + field app</span>`,
-    muaraapp: (p) => `${[92, 72, 52].map((s) => `<i class="ring" style="width:${s}cqw;height:${s}cqw"></i>`).join('')}${img('muaraapp-v1', p.name + ' video still')}${img('muaraapp-d1', p.name + ' Stegodon in AR')}`,
+    muaraapp: (p) => `${[92, 72, 52].map((s) => `<i class="ring" style="width:${s}cqw;height:${s}cqw"></i>`).join('')}${img('muaraapp-d1', p.name + ' Stegodon in AR on iPad')}${img('muaraapp-d4', p.name + ' hunting module screen')}`,
     repatriasi: (p) => `${img('sunting-1', '')}${img('nyala-1', '')}${img('repatriasi-1', p.name + ' kiosks and games')}<span class="w">Repatriasi</span>`,
     vinfast: (p) => `<span class="w">VF3<br>in AR</span><img src="media/vinfast-hero.jpg" alt="" loading="lazy">${img('vinfast-4', p.name + ' configurator screen')}<div class="sw">${['#F2C230', '#E94B3C', '#2F6BFF', '#1FA97A', '#F4F4F4', '#111'].map((c) => `<i style="background:${c}"></i>`).join('')}</div>`,
     albarsha: (p) => `<div class="flow"><span class="chip glass">Work</span><span class="chip glass">Capabilities</span><span class="chip glass">Network</span></div>${img('albarsha-2', '')}${img('albarsha-1', p.name + ' home page')}`,

@@ -138,7 +138,7 @@ h2 em{font-weight:400;letter-spacing:-.02em;color:var(--blue)} .dark h2 em{color
 .c-abhitek .chip{left:5cqw;bottom:4.5cqw;background:#151203;color:#F6C61A}
 .c-muaraapp{--bg:radial-gradient(circle at 50% 55%,#6B3BFF,#1A0B4A 70%)}
 .c-muaraapp .ring{position:absolute;left:50%;top:55%;border:1px solid rgba(255,255,255,.22);border-radius:50%;transform:translate(-50%,-50%)}
-.c-muaraapp img:nth-of-type(1){width:64cqw;aspect-ratio:16/9;left:6cqw;top:9cqw;border:1cqw solid #0D0822;border-radius:3cqw;transform:rotate(-4deg)}
+.c-muaraapp img:nth-of-type(1){width:62cqw;aspect-ratio:16/10;left:6cqw;top:9cqw;border:1cqw solid #0D0822;border-radius:3cqw;transform:rotate(-4deg);object-position:50% 30%}
 .c-muaraapp img:nth-of-type(2){width:30cqw;aspect-ratio:1;right:6cqw;top:22cqw;border-radius:2.4cqw;border:.6cqw solid #fff;transform:rotate(6deg)}
 .c-repatriasi{--bg:radial-gradient(circle at 30% 20%,#A5311B,#2B0A06 75%)}
 .c-repatriasi img{width:36cqw;aspect-ratio:1/1;border:1.3cqw solid #F7F1E6;border-bottom-width:5cqw;border-radius:.6cqw}
