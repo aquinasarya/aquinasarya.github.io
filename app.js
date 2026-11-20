@@ -97,6 +97,66 @@
 
   reveal();
 
+  // ── Hero role line drawn as dots that move away from the pointer and spring back
+  const role = $('.hero-role');
+  if (role && !reduce) (async () => {
+    const text = role.textContent.trim(), heroEl = $('.hero');
+    try { await Promise.race([document.fonts.load('800 100px Inter'), new Promise((r) => setTimeout(r, 1500))]); } catch (e) {}
+    const cv = document.createElement('canvas'); cv.setAttribute('aria-hidden', 'true');
+    role.setAttribute('aria-label', text); role.textContent = ''; role.appendChild(cv); role.classList.add('dots');
+    const c = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1), fam = 'Inter, system-ui, sans-serif';
+    let W = 0, H = 0, R = 2, dots = [], hand = null, raf = 0, first = true;
+    const build = () => {
+      const w = Math.round(Math.min(1400, heroEl.clientWidth > 700 ? heroEl.clientWidth * 0.84 : heroEl.clientWidth - 24)); if (w === W || w < 100) return;
+      W = w;
+      const o = document.createElement('canvas'), g = o.getContext('2d', { willReadFrequently: true });
+      const font = (fs) => { g.font = `800 ${fs}px ${fam}`; if ('letterSpacing' in g) g.letterSpacing = `${-0.055 * fs}px`; };
+      font(100); const fs = Math.floor(100 * (W * 0.97) / g.measureText(text).width);
+      H = Math.ceil(fs * 1.0); o.width = W; o.height = H;
+      font(fs); g.textBaseline = 'alphabetic'; g.fillStyle = '#fff';
+      g.fillText(text, (W - g.measureText(text).width) / 2, H * 0.86);
+      const px = g.getImageData(0, 0, W, H).data, step = W > 1100 ? 5 : 4, next = [];
+      for (let y = step / 2; y < H; y += step) for (let x = step / 2; x < W; x += step) if (px[((y | 0) * W + (x | 0)) * 4 + 3] > 110) next.push([x, y]);
+      R = step * 0.43;
+      dots = next.map(([x, y], i) => { const old = dots[i]; return old ? { ...old, hx: x, hy: y } : { hx: x, hy: y, x: first ? Math.random() * W : x, y: first ? H * (Math.random() * 3 - 1) : y, vx: 0, vy: 0 }; });
+      first = false;
+      cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+      run();
+    };
+    const draw = () => {
+      c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H); c.fillStyle = '#fff'; c.beginPath();
+      for (const d of dots) {
+        const sp = Math.hypot(d.vx, d.vy);
+        if (sp < 0.3) { c.moveTo(d.x + R, d.y); c.arc(d.x, d.y, R, 0, 6.283); }
+        else { const s = Math.min(2.4, 1 + sp * 0.1), rot = Math.atan2(d.vy, d.vx); c.moveTo(d.x + Math.cos(rot) * R * s, d.y + Math.sin(rot) * R * s); c.ellipse(d.x, d.y, R * s, R / Math.sqrt(s), rot, 0, 6.283); }
+      }
+      c.fill();
+    };
+    function run() {
+      if (raf) return;
+      let prev = 0;
+      const tick = (t) => {
+        const dt = prev ? Math.min(2.5, (t - prev) / 16.67) : 1; prev = t;
+        const reach = Math.max(70, W * 0.075), push = 7; let busy = !!hand;
+        for (const d of dots) {
+          if (hand) { const dx = d.x - hand.x, dy = d.y - hand.y, dd = Math.hypot(dx, dy); if (dd < reach && dd > 0.01) { const f = Math.pow(1 - dd / reach, 2) * push; d.vx += (dx / dd) * f * dt; d.vy += (dy / dd) * f * dt; } }
+          d.vx = (d.vx + (d.hx - d.x) * 0.05 * dt) * Math.pow(0.84, dt);
+          d.vy = (d.vy + (d.hy - d.y) * 0.05 * dt) * Math.pow(0.84, dt);
+          d.x += d.vx * dt; d.y += d.vy * dt;
+          if (Math.abs(d.hx - d.x) < 0.05 && Math.abs(d.hy - d.y) < 0.05 && Math.abs(d.vx) < 0.02 && Math.abs(d.vy) < 0.02) { d.x = d.hx; d.y = d.hy; d.vx = d.vy = 0; } else busy = true;
+        }
+        draw(); raf = busy ? requestAnimationFrame(tick) : 0;
+      };
+      raf = requestAnimationFrame(tick);
+    }
+    const where = (e) => { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+    heroEl.addEventListener('pointermove', (e) => { hand = where(e); run(); });
+    heroEl.addEventListener('pointerleave', () => { hand = null; run(); });
+    heroEl.addEventListener('pointerdown', (e) => { const p = where(e); for (const d of dots) { const dx = d.x - p.x, dy = d.y - p.y, dd = Math.hypot(dx, dy); if (dd < 240 && dd > 0.01) { const f = (1 - dd / 240) * 26; d.vx += (dx / dd) * f; d.vy += (dy / dd) * f; } } run(); });
+    let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 150); });
+    build();
+  })();
+
   // ── Dock appears after the hero
   const dock = $('#dock'), hero = $('.hero');
   const onScroll = () => dock.classList.toggle('show', scrollY > hero.offsetHeight * 0.6);

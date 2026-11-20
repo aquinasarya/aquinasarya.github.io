@@ -342,3 +342,7 @@ h2 em{font-weight:400;letter-spacing:-.02em;color:var(--blue)} .dark h2 em{color
 .shots.five figure:first-child{grid-column:span 2;grid-row:span 2}
 .shots.five img{height:100%;object-fit:cover;aspect-ratio:1}
 @media (max-width:980px){.shots.five{grid-template-columns:1fr 1fr}}
+
+.hero-role.dots{font-size:0;line-height:0;margin-top:clamp(8px,1.2vw,22px);display:block;cursor:crosshair}
+.hero-role.dots canvas{display:block;margin:0 auto;touch-action:pan-y}
+.hero-role.reveal.dots{opacity:1;transform:none}
