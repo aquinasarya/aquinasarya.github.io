@@ -9,8 +9,8 @@
   else (async () => {
     const cv = $('#loaderCanvas'), W = 900, H = 240, dpr = Math.min(2, devicePixelRatio || 1);
     cv.width = W * dpr; cv.height = H * dpr;
-    const safety = setTimeout(endLoader, 6000);
-    try { await Promise.race([Promise.all([document.fonts.load('400 150px Inter'), document.fonts.load('800 150px Inter')]), new Promise((r) => setTimeout(r, 1500))]); } catch (e) {}
+    const safety = setTimeout(endLoader, 5000);
+    try { await Promise.race([Promise.all([document.fonts.load('400 150px Inter'), document.fonts.load('800 150px Inter')]), new Promise((r) => setTimeout(r, 500))]); } catch (e) {}
     const o = document.createElement('canvas'); o.width = W; o.height = H;
     const g = o.getContext('2d', { willReadFrequently: true }); g.textBaseline = 'middle'; g.fillStyle = '#fff';
     let fs = 150; const fam = 'Inter, system-ui, sans-serif';
@@ -19,29 +19,36 @@
     const x0 = (W - a - b) / 2;
     g.font = `400 ${fs}px ${fam}`; g.fillText('Thomas', x0, H / 2 + 6);
     g.font = `800 ${fs}px ${fam}`; g.fillText('Arya', x0 + a, H / 2 + 6);
-    const px = g.getImageData(0, 0, W, H).data, dots = [], step = 4;
-    for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (px[(y * W + x) * 4 + 3] > 110) {
-      const ang = Math.random() * 6.283, rad = 260 + Math.random() * 260;
-      dots.push({ hx: x, hy: y, x: W / 2 + Math.cos(ang) * rad, y: H / 2 + Math.sin(ang) * rad * 0.5, vx: 0, vy: 0, bold: x >= x0 + a - 2, d: Math.random() * 14 });
-    }
-    const c = cv.getContext('2d'); let frame = 0, raf = 0, free = false;
-    const tick = () => {
-      frame++; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
-      for (const p of dots) {
-        if (!free && frame > p.d) { p.vx = (p.vx + (p.hx - p.x) * 0.055) * 0.82; p.vy = (p.vy + (p.hy - p.y) * 0.055) * 0.82; }
-        p.x += p.vx; p.y += p.vy;
-        const sp = Math.hypot(p.vx, p.vy), s = Math.min(2.6, 1 + sp * 0.12), rot = Math.atan2(p.vy, p.vx);
-        c.fillStyle = p.bold ? '#FFFFFF' : '#8FA0D0';
-        c.beginPath(); c.ellipse(p.x, p.y, 1.55 * s, 1.55 / Math.sqrt(s), rot, 0, 6.283); c.fill();
+    // The swarm starts inside the canvas, so it is visible from the first frame, and gathers fast.
+    const px = g.getImageData(0, 0, W, H).data, sets = [[], []], step = 5;
+    for (let y = 2; y < H; y += step) for (let x = 2; x < W; x += step) if (px[(y * W + x) * 4 + 3] > 110)
+      sets[x >= x0 + a - 2 ? 1 : 0].push({ hx: x, hy: y, x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0 });
+    const all = sets[0].concat(sets[1]), c = cv.getContext('2d'), cols = ['#8FA0D0', '#FFFFFF'];
+    loader.classList.add('go');
+    let raf = 0, free = false, prev = 0, formedAt = 0, ended = false;
+    const finish = () => {
+      if (ended) return; ended = true; clearTimeout(safety); free = true;
+      for (const p of all) { const dx = p.x - W / 2, dy = p.y - H / 2, dd = Math.hypot(dx, dy) || 1, f = 8 + Math.random() * 16; p.vx = (dx / dd) * f; p.vy = (dy / dd) * f * 0.7; }
+      setTimeout(() => { endLoader(); setTimeout(() => cancelAnimationFrame(raf), 900); }, 240);
+    };
+    const tick = (t) => {
+      const dt = prev ? Math.min(3, (t - prev) / 16.67) : 1; prev = t;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+      let far = 0;
+      for (let k = 0; k < 2; k++) {
+        c.fillStyle = cols[k]; c.beginPath();
+        for (const p of sets[k]) {
+          if (!free) { p.vx = (p.vx + (p.hx - p.x) * 0.11 * dt) * Math.pow(0.78, dt); p.vy = (p.vy + (p.hy - p.y) * 0.11 * dt) * Math.pow(0.78, dt); if (Math.abs(p.hx - p.x) + Math.abs(p.hy - p.y) > 3) far++; }
+          p.x += p.vx * dt; p.y += p.vy * dt;
+          c.moveTo(p.x + 1.9, p.y); c.arc(p.x, p.y, 1.9, 0, 6.283);
+        }
+        c.fill();
       }
+      // Leave only after the name has formed and been readable for a moment.
+      if (!free && far < all.length * 0.02) { if (!formedAt) formedAt = t; else if (t - formedAt > 650) finish(); }
       raf = requestAnimationFrame(tick);
     };
-    tick();
-    setTimeout(() => {
-      clearTimeout(safety); free = true;
-      for (const p of dots) { const dx = p.x - W / 2, dy = p.y - H / 2, dd = Math.hypot(dx, dy) || 1; const f = 6 + Math.random() * 16; p.vx = (dx / dd) * f; p.vy = (dy / dd) * f * 0.7; }
-      setTimeout(() => { endLoader(); setTimeout(() => cancelAnimationFrame(raf), 900); }, 260);
-    }, 2400);
+    raf = requestAnimationFrame(tick);
   })();
 
   // ── Marquee

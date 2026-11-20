@@ -38,7 +38,8 @@ button{font:inherit;color:inherit}
 .loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
 .loader canvas{width:min(92vw,900px);height:auto;display:block}
 .loader-bar{width:min(60vw,260px);height:9px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
-.loader-bar i{display:block;height:100%;width:0;border-radius:99px;background-color:var(--lime);background-image:repeating-linear-gradient(135deg,rgba(10,18,48,.85) 0,rgba(10,18,48,.85) 2px,transparent 2px,transparent 6px);background-size:17px 17px;animation:fill 1.9s .2s var(--ease) forwards,stripes .6s linear infinite}
+.loader-bar i{display:block;height:100%;width:0;border-radius:99px;background-color:var(--lime);background-image:repeating-linear-gradient(135deg,rgba(10,18,48,.85) 0,rgba(10,18,48,.85) 2px,transparent 2px,transparent 6px);background-size:17px 17px;animation:stripes .6s linear infinite}
+.loader.go .loader-bar i{animation:fill 1.1s var(--ease) forwards,stripes .6s linear infinite}
 .loader-status{font-family:var(--cap);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--d1)}
 @keyframes fill{to{width:100%}}
 @keyframes stripes{to{background-position:17px 0}}
