@@ -41,48 +41,44 @@
   const p = D.projects[i], n = D.projects[(i + 1) % D.projects.length];
   document.title = `${p.name} · Thomas Arya`;
   const mail = `mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}`;
-  const shots = p.imgs.length
-    ? `<div class="shots${p.five ? ' five' : ''}">${p.imgs.map((s, j) => `<figure class="reveal"><button type="button" class="zoom" data-src="img/${s}.jpg" aria-label="View ${esc(p.name)} screen ${j + 1} full screen"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></button></figure>`).join('')}</div>`
-    : `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
+  const fig = (src, alt, cap) => `<figure class="pfig reveal"><button type="button" class="zoom" data-src="img/${src}.jpg" aria-label="View ${esc(alt)} full screen"><img src="img/${src}.jpg" alt="${esc(alt)}" loading="lazy"></button>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
+  const figs = (list, from) => list.length ? `<div class="pfigs n${Math.min(list.length, 3)}">${list.map((x, j) => fig(x, `${p.name} screen ${from + j + 1}`)).join('')}</div>` : '';
+  const im = p.imgs, lead = im.slice(0, 1), mid = im.slice(1, 3), rest = im.slice(3);
+  const locked = `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
   document.getElementById('page').innerHTML = `
-  <section class="phero">${FX}
-    <p class="kick" style="color:rgba(255,255,255,.75)">${esc(p.type)} · ${esc(p.year)} · ${String(i + 1).padStart(2, '0')} / ${D.projects.length}</p>
-    <h1>${esc(p.name)}</h1>
-    <p class="sub">${esc(p.sub)}</p>
-    ${cover(p)}
-  </section>
-  <div class="pmeta">
-    <div><small>Role</small><b>${esc(p.role)}</b></div>
-    <div><small>Timeline</small><b>${esc(p.time)}</b></div>
-    <div><small>Field</small><b>${esc(p.field)}</b></div>
-    <div><small>Link</small><b>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.cta)} ↗</a>` : `<a href="${mail}">Case study on request</a>`}</b></div>
-  </div>
-  <section class="section"><div class="pgrid">
-    <div><p class="kick">The project</p><h2>What it is</h2></div>
-    <div class="reveal"><p class="plead">${esc(p.about)}</p></div>
-  </div></section>
-  <section class="section tint"><div class="pgrid">
-    <div><p class="kick">My role</p><h2>What I did</h2></div>
-    <div class="reveal"><p class="plead">${esc(p.statement)}</p>
-      <ol class="steps">${p.steps.map((s, j) => `<li><span>0${j + 1}</span>${esc(s)}</li>`).join('')}</ol></div>
-  </div></section>
-  <section class="section dark" style="overflow:hidden;isolation:isolate">${FX}
-    <div class="section-head" style="position:relative;z-index:1"><p class="kick">Impact</p><h2>What <em>changed.</em></h2></div>
-    <div class="impact">${p.impacts.map((x) => `<article class="glass reveal"><b>${esc(x[0])}</b><p>${esc(x[1])}</p></article>`).join('')}</div>
-  </section>
-  ${p.yt ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="reveal">${player(p.yt, p.ytStart, '', p.ytPoster)}</div></section>` : ''}
-  ${p.vids ? `<section class="section"><div class="section-head"><p class="kick">Video</p><h2>See it <em>in use.</em></h2></div><div class="vids">${p.vids.map((v, j) => `<figure class="reveal${j === 0 ? ' big' : ''}"><video src="media/${v[0]}.mp4" poster="media/${v[0]}.jpg" ${j === 0 ? 'autoplay' : 'controls preload="none"'} muted loop playsinline></video><figcaption>${esc(v[1])}</figcaption></figure>`).join('')}</div></section>` : ''}
-  <section class="section"${p.yt || p.vids ? ' style="padding-top:0"' : ''}>
-    <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
-    ${p.shotsNote ? `<p class="shots-note">${esc(p.shotsNote)}</p>` : ''}
-    ${shots}
-    ${p.stills ? `<div class="shots two" style="margin-top:16px">${p.stills.map((s) => `<figure class="reveal"><button type="button" class="zoom" data-src="img/${s}.jpg" aria-label="View full screen"><img src="img/${s}.jpg" alt="${esc(p.name)} video still" loading="lazy"></button></figure>`).join('')}</div><p class="shots-note" style="margin:14px 0 0">Stills from the video.</p>` : ''}
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px">
+  <article class="pw">
+    <a class="pback" href="index.html#work"><span aria-hidden="true">←</span> Back to all work</a>
+    <div class="pcover reveal">${cover(p)}</div>
+    <header class="phead">
+      <h1>${esc(p.name)}</h1>
+      <p class="sub">${esc(p.sub)}</p>
+      <div class="ptags"><span>My role: <b>${esc(p.role)}</b></span><span>${esc(p.type)}</span><span>${esc(p.field)}</span><span>${esc(p.time)}</span></div>
+    </header>
+    <section class="pblock">
+      <h2>What it is</h2>
+      <p>${esc(p.about)}</p>
+      ${p.shotsNote ? `<p class="pnote">${esc(p.shotsNote)}</p>` : ''}
+      ${im.length ? figs(lead, 0) : locked}
+    </section>
+    <section class="pblock">
+      <h2>What I did</h2>
+      <blockquote>${esc(p.statement)}</blockquote>
+      <ol class="steps">${p.steps.map((s, j) => `<li><span>0${j + 1}</span>${esc(s)}</li>`).join('')}</ol>
+      ${figs(mid, 1)}
+    </section>
+    <section class="pblock">
+      <h2>What changed</h2>
+      <div class="impact">${p.impacts.map((x) => `<article class="reveal"><b>${esc(x[0])}</b><p>${esc(x[1])}</p></article>`).join('')}</div>
+    </section>
+    ${p.yt ? `<section class="pblock"><h2>See it in use</h2><div class="reveal">${player(p.yt, p.ytStart, '', p.ytPoster)}</div></section>` : ''}
+    ${p.vids ? `<section class="pblock"><h2>See it in use</h2><div class="vids">${p.vids.map((v, j) => `<figure class="reveal${j === 0 ? ' big' : ''}"><video src="media/${v[0]}.mp4" poster="media/${v[0]}.jpg" ${j === 0 ? 'autoplay' : 'controls preload="none"'} muted loop playsinline></video><figcaption>${esc(v[1])}</figcaption></figure>`).join('')}</div></section>` : ''}
+    ${rest.length || p.stills ? `<section class="pblock"><h2>More screens</h2>${figs(rest, 3)}${p.stills ? `<div class="pfigs n2">${p.stills.map((x) => fig(x, p.name + ' video still')).join('')}</div><p class="pnote">Stills from the video.</p>` : ''}</section>` : ''}
+    <div class="pcta">
       ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}
       <a class="btn btn-ink" href="${mail}"><span>Ask for the full case study</span><i aria-hidden="true">→</i></a>
     </div>
-  </section>
-  <section class="section dark" style="overflow:hidden;isolation:isolate">${FX}
+  </article>
+  <section class="section dark pnext-band" style="overflow:hidden;isolation:isolate">${FX}
     <div class="pnext">
       <div><p class="kick">Next project</p><h2>${esc(n.name)}</h2><p class="section-sub" style="margin:0 0 28px">${esc(n.sub)}</p>
         <a class="btn" href="work.html?k=${n.id}"><span>Open project</span><i aria-hidden="true">→</i></a></div>
