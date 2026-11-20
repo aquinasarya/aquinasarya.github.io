@@ -23,6 +23,13 @@
   <span>Jakarta, Indonesia</span>
   <a href="#">Back to top ↑</a>
 </footer>
+<dialog class="lightbox" id="lightbox" aria-label="Picture viewer">
+  <div class="lb-stage"><img src="" alt=""></div>
+  <button class="lb-close" type="button" aria-label="Close">×</button>
+  <button class="lb-prev" type="button" aria-label="Previous picture">←</button>
+  <button class="lb-next" type="button" aria-label="Next picture">→</button>
+  <span class="lb-count"></span>
+</dialog>
 <script src="data.js"></script>
 <script src="data2.js"></script>
 <script src="shared.js"></script>
@@ -35,7 +42,7 @@
   document.title = `${p.name} · Thomas Arya`;
   const mail = `mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}`;
   const shots = p.imgs.length
-    ? `<div class="shots${p.five ? ' five' : ''}">${p.imgs.map((s, j) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></figure>`).join('')}</div>`
+    ? `<div class="shots${p.five ? ' five' : ''}">${p.imgs.map((s, j) => `<figure class="reveal"><button type="button" class="zoom" data-src="img/${s}.jpg" aria-label="View ${esc(p.name)} screen ${j + 1} full screen"><img src="img/${s}.jpg" alt="${esc(p.name)} screen ${j + 1}" loading="lazy"></button></figure>`).join('')}</div>`
     : `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
   document.getElementById('page').innerHTML = `
   <section class="phero">${FX}
@@ -69,7 +76,7 @@
     <div class="section-head"><p class="kick">Selected screens</p><h2>A closer <em>look.</em></h2></div>
     ${p.shotsNote ? `<p class="shots-note">${esc(p.shotsNote)}</p>` : ''}
     ${shots}
-    ${p.stills ? `<div class="shots two" style="margin-top:16px">${p.stills.map((s) => `<figure class="reveal"><img src="img/${s}.jpg" alt="${esc(p.name)} video still" loading="lazy"></figure>`).join('')}</div><p class="shots-note" style="margin:14px 0 0">Stills from the video.</p>` : ''}
+    ${p.stills ? `<div class="shots two" style="margin-top:16px">${p.stills.map((s) => `<figure class="reveal"><button type="button" class="zoom" data-src="img/${s}.jpg" aria-label="View full screen"><img src="img/${s}.jpg" alt="${esc(p.name)} video still" loading="lazy"></button></figure>`).join('')}</div><p class="shots-note" style="margin:14px 0 0">Stills from the video.</p>` : ''}
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px">
       ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}
       <a class="btn btn-ink" href="${mail}"><span>Ask for the full case study</span><i aria-hidden="true">→</i></a>
@@ -83,6 +90,17 @@
     </div>
   </section>`;
   reveal();
+
+  // Full-screen viewer for the pictures in "A closer look"
+  const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img'), lbCount = lb.querySelector('.lb-count');
+  const zooms = [...document.querySelectorAll('.zoom')]; let at = 0;
+  const showAt = (n) => { at = (n + zooms.length) % zooms.length; lbImg.src = zooms[at].dataset.src; lbImg.alt = zooms[at].querySelector('img').alt; lbCount.textContent = `${at + 1} / ${zooms.length}`; lb.classList.toggle('single', zooms.length < 2); };
+  zooms.forEach((z, n) => z.addEventListener('click', () => { showAt(n); lb.showModal(); }));
+  lb.querySelector('.lb-prev').addEventListener('click', () => showAt(at - 1));
+  lb.querySelector('.lb-next').addEventListener('click', () => showAt(at + 1));
+  lb.querySelector('.lb-close').addEventListener('click', () => lb.close());
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-stage')) lb.close(); });
+  lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') showAt(at - 1); if (e.key === 'ArrowRight') showAt(at + 1); });
 })();
 </script>
 </body>

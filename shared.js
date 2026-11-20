@@ -7,7 +7,7 @@ window.TA = (() => {
 
   // One cover per project, each with its own composition.
   const covers = {
-    influence: (p) => `${img('influence-1', p.name + ' earnings screen')}<span class="chip glass">Rates with a source</span>`,
+    influence: (p) => `${img('influence-1', p.name + ' earnings screen')}<span class="chip">Rates with a source</span>`,
     simako: (p) => `${img('simako-3', '')}${img('simako-4', '')}${img('simako-2', p.name + ' dashboard')}<span class="chip glass">14 museums, one record</span>`,
     avp: (p) => `${img('avp-2', '')}${img('avp-3', '')}${img('avp-1', p.name + ' redrawn coverage map, sample data')}<span class="w">18%</span><span class="chip glass lock">Redrawn · sample data</span>`,
     jalana: (p) => `${img('jalana-3', p.name + ' app screens')}<span class="w">Jalana</span>`,
