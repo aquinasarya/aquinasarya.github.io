@@ -41,12 +41,13 @@
   const p = D.projects[i], n = D.projects[(i + 1) % D.projects.length];
   document.title = `${p.name} · Thomas Arya`;
   const mail = `mailto:aquinasarya@gmail.com?subject=${encodeURIComponent('Case study request: ' + p.name)}`;
-  const fig = (src, alt, cap) => `<figure class="pfig reveal"><button type="button" class="zoom" data-src="img/${src}.jpg" aria-label="View ${esc(alt)} full screen"><img src="img/${src}.jpg" alt="${esc(alt)}" loading="lazy"></button>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ''}</figure>`;
-  const figs = (list, from) => list.length ? `<div class="pfigs n${Math.min(list.length, 3)}">${list.map((x, j) => fig(x, `${p.name} screen ${from + j + 1}`)).join('')}</div>` : '';
-  const im = p.imgs, lead = im.slice(0, 1), mid = im.slice(1, 3), rest = im.slice(3);
+  // A shot is a file name, or [file, title, caption]
+  const fig = (x, alt, n) => { const src = Array.isArray(x) ? x[0] : x, t = Array.isArray(x) ? x[1] : '', c = Array.isArray(x) ? x[2] : ''; return `<figure class="pfig reveal"><button type="button" class="zoom" data-src="img/${src}.jpg" aria-label="View ${esc(t || alt)} full screen"><img src="img/${src}.jpg" alt="${esc(t || alt)}" loading="lazy"></button>${t ? `<figcaption><span>${String(n).padStart(2, '0')}</span><b>${esc(t)}</b>${esc(c)}</figcaption>` : ''}</figure>`; };
+  const figs = (list, from, cols) => list.length ? `<div class="pfigs n${cols || Math.min(list.length, 3)}">${list.map((x, j) => fig(x, `${p.name} screen ${from + j + 1}`, from + j + 1)).join('')}</div>` : '';
+  const im = p.shots || p.imgs, ph = p.phone, lead = im.slice(0, ph ? 3 : 1), mid = im.slice(ph ? 3 : 1, ph ? 5 : 3), rest = im.slice(ph ? 5 : 3);
   const locked = `<div class="locked reveal"><p class="kick" style="margin:0">Under confidentiality</p><h3>Screens, flows and the design system are shared in a private walkthrough.</h3><p>This is client work. I can show the real modules, the information architecture before and after, and the component library on a call.</p><a class="btn btn-ink" href="${mail}"><span>Request a walkthrough</span><i aria-hidden="true">→</i></a></div>`;
   document.getElementById('page').innerHTML = `
-  <article class="pw">
+  <article class="pw${p.phone ? ' phone' : ''}">
     <a class="pback" href="index.html#work"><span aria-hidden="true">←</span> Back to all work</a>
     <div class="pcover reveal">${cover(p)}</div>
     <header class="phead">
@@ -56,6 +57,7 @@
     </header>
     <section class="pblock">
       <h2>What it is</h2>
+      ${p.hook ? `<p class="phook">${esc(p.hook)}</p>` : ''}
       <p>${esc(p.about)}</p>
       ${p.shotsNote ? `<p class="pnote">${esc(p.shotsNote)}</p>` : ''}
       ${im.length ? figs(lead, 0) : locked}
@@ -64,7 +66,7 @@
       <h2>What I did</h2>
       <blockquote>${esc(p.statement)}</blockquote>
       <ol class="steps">${p.steps.map((s, j) => `<li><span>0${j + 1}</span>${esc(s)}</li>`).join('')}</ol>
-      ${figs(mid, 1)}
+      ${figs(mid, lead.length)}
     </section>
     <section class="pblock">
       <h2>What changed</h2>
@@ -72,7 +74,7 @@
     </section>
     ${p.yt ? `<section class="pblock"><h2>See it in use</h2><div class="reveal">${player(p.yt, p.ytStart, '', p.ytPoster)}</div></section>` : ''}
     ${p.vids ? `<section class="pblock"><h2>See it in use</h2><div class="vids">${p.vids.map((v, j) => `<figure class="reveal${j === 0 ? ' big' : ''}"><video src="media/${v[0]}.mp4" poster="media/${v[0]}.jpg" ${j === 0 ? 'autoplay' : 'controls preload="none"'} muted loop playsinline></video><figcaption>${esc(v[1])}</figcaption></figure>`).join('')}</div></section>` : ''}
-    ${rest.length || p.stills ? `<section class="pblock"><h2>More screens</h2>${figs(rest, 3)}${p.stills ? `<div class="pfigs n2">${p.stills.map((x) => fig(x, p.name + ' video still')).join('')}</div><p class="pnote">Stills from the video.</p>` : ''}</section>` : ''}
+    ${rest.length || p.stills ? `<section class="pblock"><h2>${p.shots ? 'Screen by screen' : 'More screens'}</h2>${figs(rest, lead.length + mid.length, ph ? 3 : p.shots ? 2 : 0)}${p.stills ? `<div class="pfigs n2">${p.stills.map((x) => fig(x, p.name + ' video still', 0)).join('')}</div><p class="pnote">Stills from the video.</p>` : ''}</section>` : ''}
     <div class="pcta">
       ${p.url ? `<a class="btn btn-ink" href="${esc(p.url)}" target="_blank" rel="noopener"><span>${esc(p.cta)}</span><i aria-hidden="true">↗</i></a>` : ''}
       <a class="btn btn-ink" href="${mail}"><span>Ask for the full case study</span><i aria-hidden="true">→</i></a>

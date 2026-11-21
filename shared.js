@@ -9,8 +9,8 @@ window.TA = (() => {
   const covers = {
     influence: (p) => `${img('influence-1', p.name + ' earnings screen')}<span class="chip">Rates with a source</span>`,
     simako: (p) => `${img('simako-3', '')}${img('simako-4', '')}${img('simako-2', p.name + ' dashboard')}<span class="chip glass">14 museums, one record</span>`,
-    avp: (p) => `${img('avp-2', '')}${img('avp-3', '')}${img('avp-1', p.name + ' redrawn coverage map, sample data')}<span class="w">18%</span><span class="chip glass lock">Redrawn · sample data</span>`,
-    jalana: (p) => `${img('jalana-3', p.name + ' app screens')}<span class="w">Jalana</span>`,
+    avp: (p) => `${img('avp-4', '')}${img('avp-5', '')}${img('avp-2', p.name + ' redrawn coverage map, sample data')}<span class="w">18%</span><span class="chip glass lock">Redrawn · sample data</span>`,
+    jalana: (p) => `<span class="w">Jalana</span>${img('jal-2', '')}${img('jal-5', '')}${img('jal-3', '')}${img('jal-1', p.name + ' app home screen')}<span class="chip glass">Stamps, cards and badges</span>`,
     abhitek: (p) => `${img('abhitek-1', p.name + ' web console')}${img('abhitek-3', p.name + ' phone app')}<span class="chip">Office console + field app</span>`,
     muaraapp: (p) => `${[92, 72, 52].map((s) => `<i class="ring" style="width:${s}cqw;height:${s}cqw"></i>`).join('')}${img('muaraapp-d1', p.name + ' Stegodon in AR on iPad')}${img('muaraapp-d4', p.name + ' hunting module screen')}`,
     repatriasi: (p) => `${img('sunting-1', '')}${img('nyala-1', '')}${img('repatriasi-1', p.name + ' kiosks and games')}<span class="w">Repatriasi</span>`,
